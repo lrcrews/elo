@@ -1,29 +1,18 @@
 import React, { useEffect, useState } from "react";
 
-import * as Tabletop from "tabletop";
+import * as _ from "lodash";
 
 import logo from "./logo.svg";
 import "./App.css";
+import { loadRatedGuilds } from "./utils/herowars-elo-api";
 
 function App() {
-  const [data, setData] = useState([]);
-
-  // Needed to copy the actual spreadsheet so I could publish to web, so this
-  // stuff isn't "live" yet.  Maybe exnor/tex adam can publish the main sheet.
-  //
-  // https://docs.google.com/spreadsheets/d/1GL02V9TNPYwf7gcRyMVkpH36GzxuGBHD24KE-6KXuoo/edit?usp=sharing
+  const [guilds, setGuilds] = useState([]);
 
   useEffect(() => {
-    Tabletop.init({
-      key: "1GL02V9TNPYwf7gcRyMVkpH36GzxuGBHD24KE-6KXuoo",
-    })
-      .then((data: { [key: string]: any }) => {
-        console.log(
-          `data: ${Object.keys(data["Sorted by Name"]["prettyColumns"])}`
-        );
-        //setData(data);
-      })
-      .catch((err: string) => console.warn(err));
+    loadRatedGuilds().then((data) => {
+      _.each(data, (guild) => console.log(JSON.stringify(guild)));
+    });
   }, []);
 
   return (

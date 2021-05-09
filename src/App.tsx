@@ -11,28 +11,32 @@ import { Guilds } from "./models";
 
 import logo from "./screens/Home/logo.svg";
 
+const HISTORIC_ELO_DAYS_TO_LOAD = 10;
+
 function App() {
   const [guilds, setGuilds] = useState<Guilds>([]);
   const [historicElo, setHistoricElo] = useState<Array<Guilds>>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const subscription = loadData().subscribe((results) => {
-      const eloRatingsByDay: Array<Guilds> = [];
-      _.each(results, (result, index) => {
-        const data = result.data;
-        console.log(`result ${index} length: ${data.length}`);
-        const decodedGuilds = Guilds.decode(data);
-        if (Either.isRight(decodedGuilds)) {
-          eloRatingsByDay.push(decodedGuilds.right);
-        } else {
-          console.log("decode error");
-        }
-      });
-      setGuilds(eloRatingsByDay[0]);
-      setHistoricElo(eloRatingsByDay);
-      setLoading(false);
-    });
+    const subscription = loadData(HISTORIC_ELO_DAYS_TO_LOAD).subscribe(
+      (results) => {
+        const eloRatingsByDay: Array<Guilds> = [];
+        _.each(results, (result, index) => {
+          const data = result.data;
+          console.log(`result ${index} length: ${data.length}`);
+          const decodedGuilds = Guilds.decode(data);
+          if (Either.isRight(decodedGuilds)) {
+            eloRatingsByDay.push(decodedGuilds.right);
+          } else {
+            console.log("decode error");
+          }
+        });
+        setGuilds(eloRatingsByDay[0]);
+        setHistoricElo(eloRatingsByDay);
+        setLoading(false);
+      }
+    );
 
     return () => {
       subscription?.unsubscribe();

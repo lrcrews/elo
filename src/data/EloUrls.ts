@@ -6,21 +6,34 @@
  * Specifically, the manual part of this looks like...
  *
  *
+ * We have a copy of the official spreadsheet:
+ * https://docs.google.com/spreadsheets/d/1weTKYoSEtsgF2WzIWE-X84Ds90bDeh2Z-65kXy5RabY/edit#gid=882761748
+ *
+ * The official (original) spreadsheet:
+ * https://docs.google.com/spreadsheets/d/1gzWkYgZZm2IG2SR_V_T-WJ28hRjBwFIoCUFPpCQsMY0/edit#gid=947975514
+ *
+ * This spreadsheet updates the data when the elo-admins input the latest info
+ *
+ *
  * Step 1
  *
- * Each day we copy the official spreadsheet:
- * https://docs.google.com/spreadsheets/d/1gzWkYgZZm2IG2SR_V_T-WJ28hRjBwFIoCUFPpCQsMY0/edit#gid=947975514
+ * Open up hidden "Linked Data" sheet and copy _that data_ to a new spreadsheet, naming it
+ * ELO-<YEAR>-<MONTH>-<DAY>, e.g. "ELO-2021-05-13"
+ *
+ * note: you must copy the data, not the spreadsheet itself, if you copy the spreadsheet the
+ *       data will auto-update, and that's not good 😁
  *
  *
  * Step 2
  *
- * Open up hidden "Linked Data" sheet and copy _that_ sheet to a new spreadsheet, naming it
- * ELO-<YEAR>-<MONTH>-<DAY>, e.g. "ELO-2021-05-13"
+ * Add the header row to the newly created spreadsheet (can copy from previous sheets), it's:
+ *
+ * ID	NAME	SERVER	BANNER_IMG	RATING	BRACKET_WINS	FLAIR	H	STATUS	J
  *
  *
  * Step 3
  *
- * "Publish to Web" that new spreadsheet as CSV, and ensure "Anyone with a link" may open it
+ * "Publish to Web" that new spreadsheet as CSV
  *
  *
  * Step 4
@@ -34,8 +47,10 @@
  */
 
 export const ELO_CSV_URLS = [
+  // 2021-05-07
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vRIn2o3ElDxiFcfOCcsPyWPxCbIMGvAq2vgi1CdxU4VHxlagFttDH3AHtq-ryDPUg7ymJuX0nFKg1u9/pub?output=csv",
   // 2021-05-06
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vRkJBcMlX_Xxdu-AwQww35BgHkaQzy7Om5Tl2IqeUbeTozpCFmfmlXgALChNzJBfAfQ_P9dOipFzN-c/pub?output=csv",
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQQuOA9fVzUaTONFV5iyPIwGC_mOfmRAMhGttdfhyPyBt7rVuFnXi64oUXyqGnkbbcY2ItMqEB4-6y-/pub?output=csv",
   // 2021-05-05
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vQfF5esdZbsKDiouIevtdCDmOXg546vo2th5Kd_nejPcxFq1o4oPOiXtA3MD24QyOi-ht79HFfKV6W9/pub?output=csv",
 ];

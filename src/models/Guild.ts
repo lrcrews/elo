@@ -2,15 +2,22 @@
 import * as t from "io-ts";
 
 const GuildRequiredAttrs = t.type({
-  "Guild Name": t.string,
-  id: t.string,
-  Rank: t.number,
-  Rating: t.number,
-  Server: t.number,
+  BRACKET_WINS: t.number,
+  ID: t.string,
+  NAME: t.string,
+  RATING: t.number,
+  SERVER: t.number,
+  STATUS: t.string,
 });
 
+// Properties that are either (1) not provided at all, or
+// (2) are provided but null.
+//
 const GuildOptionalAttrs = t.type({
-  Banner: t.string,
+  BANNER_IMG: t.union([t.string, t.null]),
+  FLAIR: t.union([t.string, t.null]),
+  H: t.union([t.unknown, t.null]),
+  J: t.union([t.unknown, t.null]),
 });
 
 const Guild = t.intersection([GuildRequiredAttrs, GuildOptionalAttrs]);

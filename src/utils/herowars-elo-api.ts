@@ -1,31 +1,33 @@
-import * as Either from "fp-ts/lib/Either";
-import * as Tabletop from "tabletop";
+import * as _ from "lodash";
+import Papa from "papaparse";
+import { forkJoin } from "rxjs";
 
-import { Guilds } from "../models";
+import { ELO_CSV_URLS } from "../data";
 
-export async function loadRatedGuilds(): Promise<Guilds> {
-  // Needed to copy the actual spreadsheet so I could publish to web, so this
-  // stuff isn't "live" yet.  Maybe exnor/tex adam can publish the main sheet.
-  //
-  // https://docs.google.com/spreadsheets/d/1GL02V9TNPYwf7gcRyMVkpH36GzxuGBHD24KE-6KXuoo/edit?usp=sharing
+/**
+ * Loads the Elo data from the urls defined in ELO_CSV_URLS
+ *
+ * @param numOfDays if provided data will only load the first X rows from ELO_CSV_URLS
+ *
+ * @returns an `Observable` that is an `Array` of `Guilds` (which is itself an `Array` of `Guild`).
+ */
+export function loadData(numOfDays = 2) {
+  if (numOfDays < 2) {
+    numOfDays = 2; // less than 2 is just the existing spreadsheet data 👍
+  }
+  const urls = _.slice(ELO_CSV_URLS, 0, numOfDays);
+  return forkJoin(_.map(urls, (url) => parseUrl(url)));
+}
 
-  return Tabletop.init({
-    key: "1GL02V9TNPYwf7gcRyMVkpH36GzxuGBHD24KE-6KXuoo",
-    parseNumbers: true,
-    postProcess: (datum: { [key: string]: any }) =>
-      (datum["id"] = `${datum["Server"]}-${datum["Guild Name"]}`),
-  })
-    .then((data: { [key: string]: any }) => {
-      const decodedGuilds = Guilds.decode(data["Sorted by Rating"]["elements"]);
-      if (Either.isRight(decodedGuilds)) {
-        return decodedGuilds.right;
-      } else {
-        console.log("the data changed!!1!111!!1!!!");
-        return [];
-      }
-    })
-    .catch((err: string) => {
-      console.warn(err);
-      return [];
+function parseUrl(url: string): Promise<Papa.ParseResult> {
+  return new Promise((resolve) => {
+    Papa.parse(url, {
+      download: true,
+      header: true,
+      dynamicTyping: true,
+      complete: function (results) {
+        resolve(results);
+      },
     });
+  });
 }

@@ -1,10 +1,96 @@
+@import "../sass-mixins/mixins.scss";
+
 .guild-info-small {
   display: flex;
   flex-direction: row;
   padding: 0.5rem 1rem;
-  width: 420px;
+  width: 26.25rem;
 
-  .banner {
+  &:hover {
+    background-color: $grey-8;
+    cursor: pointer;
+  }
+
+  .gained-value {
+    color: $green-1;
+  }
+
+  .loss-value {
+    color: $red-1;
+  }
+
+  .banner-container {
+    padding-right: 0.25rem;
     width: 4rem;
+
+    > img {
+      width: 4rem;
+    }
+  }
+
+  .info-container {
+    text-align: left;
+    width: 13.5rem;
+
+    .name {
+      font-size: $large;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .server {
+      font-size: $small;
+    }
+  }
+
+  .rank-container {
+    text-align: center;
+    width: 4rem;
+
+    .rank {
+      font-size: $large;
+    }
+
+    .rank-diff {
+      > * {
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      .rank-gain,
+      .rank-loss {
+        border-left: 7px solid transparent;
+        border-right: 7px solid transparent;
+        height: 0;
+        margin-right: 0.25rem;
+        width: 0;
+      }
+
+      .rank-gain {
+        border-bottom: 14px solid $green-1;
+      }
+
+      .rank-loss {
+        border-top: 14px solid $red-1;
+      }
+
+      .rank-gain-value {
+        color: $green-1;
+      }
+
+      .rank-loss-value {
+        color: $red-1;
+      }
+    }
+  }
+
+  .rating-container {
+    text-align: right;
+    width: 4.5rem;
+
+    .rating {
+      font-size: $large;
+    }
   }
 }

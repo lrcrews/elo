@@ -3,20 +3,27 @@ import { Link } from "react-router-dom";
 
 import * as _ from "lodash";
 
-import { HistoricEloContext } from "../../data";
+import { GuildsContext } from "../../data";
 
 import "./Home.scss";
+import GuildInfoSmall from "../../shared-components/GuildInfoSmall";
 
 export default function HomeScreen() {
-  const { historicElo } = useContext(HistoricEloContext);
+  const { guilds } = useContext(GuildsContext);
+
+  function navigateToGuildId(id: string) {
+    console.log(`navigate to id: ${id}`);
+  }
 
   return (
     <header className="App-header">
-      {/* {loading && <img src={logo} className="App-logo" alt="logo" />}
-      {!loading && ( */}
       <ul>
-        {_.map(historicElo[0], (elo) => {
-          return <li key={elo.ID}>{elo.NAME}</li>;
+        {_.map(guilds, (guild) => {
+          return (
+            <li key={guild.ID}>
+              <GuildInfoSmall guild={guild} onClick={navigateToGuildId} />
+            </li>
+          );
         })}
       </ul>
       {/* )} */}

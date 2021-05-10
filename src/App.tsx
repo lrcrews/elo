@@ -10,8 +10,9 @@ import { GuildsProvider, HistoricEloProvider } from "./data";
 import { Guilds } from "./models";
 
 import logo from "./screens/Home/logo.svg";
+import { computeDiffs, orderedGuilds } from "./utils/elo-data-helper";
 
-const HISTORIC_ELO_DAYS_TO_LOAD = 10;
+const HISTORIC_ELO_DAYS_TO_LOAD = 2;
 
 function App() {
   const [guilds, setGuilds] = useState<Guilds>([]);
@@ -24,16 +25,27 @@ function App() {
         const eloRatingsByDay: Array<Guilds> = [];
         _.each(results, (result, index) => {
           const data = result.data;
-          console.log(`result ${index} length: ${data.length}`);
           const decodedGuilds = Guilds.decode(data);
           if (Either.isRight(decodedGuilds)) {
-            eloRatingsByDay.push(decodedGuilds.right);
+            eloRatingsByDay.push(orderedGuilds(decodedGuilds.right));
           } else {
             console.log("decode error");
           }
         });
-        setGuilds(eloRatingsByDay[0]);
         setHistoricElo(eloRatingsByDay);
+        if (eloRatingsByDay.length === 2) {
+          // No "decode error"?!?, let's compute some diffs 🎉
+          _.each(eloRatingsByDay[0], (guild, index) => {
+            guild.RANK = index + 1;
+            const { rankingChange, ratingChange } = computeDiffs(
+              guild,
+              eloRatingsByDay[1]
+            );
+            guild.RANKING_CHANGE = rankingChange;
+            guild.RATING_CHANGE = ratingChange;
+          });
+        }
+        setGuilds(eloRatingsByDay[0]);
         setLoading(false);
       }
     );

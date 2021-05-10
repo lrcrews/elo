@@ -7,7 +7,7 @@ import { ELO_CSV_URLS } from "../data";
 /**
  * Loads the Elo data from the urls defined in ELO_CSV_URLS
  *
- * @param numOfDays if provided data will only load the first X rows from ELO_CSV_URLS
+ * @param numOfDays if provided data will only load the first X rows from ELO_CSV_URLS, defaults to `2`
  *
  * @returns an `Observable` that is an `Array` of `Guilds` (which is itself an `Array` of `Guild`).
  */

@@ -1,0 +1,24 @@
+@import "./sass-mixins/mixins.scss";
+
+html,
+body,
+button,
+input,
+select,
+textarea {
+  @include font-normal;
+  color: $white-1;
+}
+
+body {
+  background-color: $grey-10;
+  margin: 0;
+}
+
+ol,
+ul {
+  clear: both;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}

@@ -23,3 +23,11 @@ ul {
   margin: 0;
   padding: 0;
 }
+
+a {
+  color: $white-1;
+
+  &:visited {
+    color: $white-1;
+  }
+}

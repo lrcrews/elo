@@ -1,10 +1,10 @@
+import AboutScreen from "../screens/About/About";
 import HomeScreen from "../screens/Home/Home";
-import PendingResultsScreen from "../screens/PendingResults/PendingResultsScreen";
 
 export const routes = [
   {
-    path: "/pending-results",
-    component: PendingResultsScreen,
+    path: "/about",
+    component: AboutScreen,
   },
   {
     path: "/",

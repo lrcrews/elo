@@ -1,0 +1,11 @@
+@import "../../sass-mixins/mixins.scss";
+
+#about-screen {
+  text-align: center;
+
+  .shameless {
+    border-top: 1px solid $white-1;
+    margin-top: 2rem;
+    padding-top: 2rem;
+  }
+}

@@ -109,7 +109,7 @@
         border-top: 14px solid $red-1;
 
         @media (max-width: $narrow-screen-breakpoint) {
-          border-bottom: 10px solid $red-1;
+          border-top: 10px solid $red-1;
         }
       }
     }

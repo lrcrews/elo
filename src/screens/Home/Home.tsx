@@ -16,7 +16,7 @@ export default function HomeScreen() {
   }
 
   return (
-    <section id="home-page">
+    <section id="home-screen">
       <ul>
         {_.map(guilds, (guild) => {
           return (

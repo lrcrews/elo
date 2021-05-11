@@ -2,7 +2,7 @@ import React from "react";
 
 import * as _ from "lodash";
 
-import { Guild } from "../models";
+import { Guild } from "../../models";
 
 import "./GuildInfoSmall.scss";
 

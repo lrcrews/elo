@@ -1,0 +1,49 @@
+@import "../../sass-mixins/mixins.scss";
+
+#site-header {
+  background-color: rgba(0, 0, 0, 0.6);
+  box-shadow: 0px 1px 4px #ffffffaa;
+  box-sizing: border-box;
+  height: $site-header-height;
+  padding: 0.25rem 1.5rem;
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+
+  > * {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .logo {
+    border-radius: 0.5rem;
+    height: 100%;
+  }
+
+  .name {
+    color: $grey-1;
+    display: inline-block;
+    font-size: $large;
+    padding: 0 1rem;
+    margin: 0.125rem 0 0 -0.5rem;
+  }
+
+  .links {
+    float: right;
+    margin-top: 0.25rem;
+
+    > * {
+      display: inline-block;
+      margin-left: 1.25rem;
+      vertical-align: middle;
+    }
+
+    a {
+      color: $white-1;
+
+      &:visited {
+        color: $white-1;
+      }
+    }
+  }
+}

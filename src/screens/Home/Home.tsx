@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 import * as _ from "lodash";
 
 import { GuildsContext } from "../../data";
+import { GuildInfoSmall } from "../../shared-components";
 
 import "./Home.scss";
-import GuildInfoSmall from "../../shared-components/GuildInfoSmall";
 
 export default function HomeScreen() {
   const { guilds } = useContext(GuildsContext);
@@ -16,7 +16,7 @@ export default function HomeScreen() {
   }
 
   return (
-    <header className="App-header">
+    <section id="home-page">
       <ul>
         {_.map(guilds, (guild) => {
           return (
@@ -28,6 +28,6 @@ export default function HomeScreen() {
       </ul>
       {/* )} */}
       <Link to="/pending-results">pending</Link>
-    </header>
+    </section>
   );
 }

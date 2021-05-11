@@ -4,13 +4,17 @@ import { BrowserRouter as Router, Switch } from "react-router-dom";
 import * as Either from "fp-ts/lib/Either";
 import * as _ from "lodash";
 
-import { routes, RouteWithSubRoutes } from "./routes";
+import { computeDiffs, orderedGuilds } from "./utils/elo-data-helper";
 import { loadData } from "./utils/herowars-elo-api";
+
 import { GuildsProvider, HistoricEloProvider } from "./data";
 import { Guilds } from "./models";
+import { routes, RouteWithSubRoutes } from "./routes";
+import { SiteHeader } from "./shared-components";
 
-import logo from "./screens/Home/logo.svg";
-import { computeDiffs, orderedGuilds } from "./utils/elo-data-helper";
+import logo from "./elo-logo.png";
+
+import "./App.scss";
 
 const HISTORIC_ELO_DAYS_TO_LOAD = 2;
 
@@ -29,7 +33,7 @@ function App() {
           if (Either.isRight(decodedGuilds)) {
             eloRatingsByDay.push(orderedGuilds(decodedGuilds.right));
           } else {
-            console.log("decode error");
+            console.log(`decode error on url index: ${index}`);
           }
         });
         setHistoricElo(eloRatingsByDay);
@@ -57,26 +61,32 @@ function App() {
 
   if (loading) {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-        </header>
-      </div>
+      <Router>
+        <div id="elo-app">
+          <SiteHeader />
+          <section id="main-content-container">
+            <img src={logo} className="loading-image" alt="loading data" />
+          </section>
+        </div>
+      </Router>
     );
   }
 
   return (
     <Router>
-      <div className="App">
-        <GuildsProvider guilds={guilds}>
-          <HistoricEloProvider historicElo={historicElo}>
-            <Switch>
-              {routes.map((route, i) => (
-                <RouteWithSubRoutes key={i} {...route} />
-              ))}
-            </Switch>
-          </HistoricEloProvider>
-        </GuildsProvider>
+      <div id="elo-app">
+        <SiteHeader />
+        <section id="main-content-container">
+          <GuildsProvider guilds={guilds}>
+            <HistoricEloProvider historicElo={historicElo}>
+              <Switch>
+                {routes.map((route, i) => (
+                  <RouteWithSubRoutes key={i} {...route} />
+                ))}
+              </Switch>
+            </HistoricEloProvider>
+          </GuildsProvider>
+        </section>
       </div>
     </Router>
   );

@@ -20,12 +20,29 @@
     height: 100%;
   }
 
-  .name {
+  .full-name,
+  .short-name {
     color: $grey-1;
-    display: inline-block;
-    font-size: $large;
     padding: 0 1rem;
     margin: 0.125rem 0 0 -0.5rem;
+  }
+
+  .full-name {
+    display: inline-block;
+    font-size: $large;
+
+    @media (max-width: $narrow-screen-breakpoint) {
+      display: none;
+    }
+  }
+
+  .short-name {
+    display: none;
+    font-size: $normal;
+
+    @media (max-width: $narrow-screen-breakpoint) {
+      display: inline-block;
+    }
   }
 
   .links {

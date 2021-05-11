@@ -11,7 +11,8 @@ export default function SiteHeader() {
     <header id="site-header">
       <img src={logo} alt="Elo rankings" className="logo" />
       <Link to="/">
-        <div className="name">Hero Wars World Leaderboard</div>
+        <div className="full-name">Hero Wars World Leaderboard</div>
+        <div className="short-name">HW WLD Leaderboard</div>
       </Link>
       <ul className="links">
         <li>

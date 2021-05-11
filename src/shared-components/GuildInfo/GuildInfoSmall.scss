@@ -6,6 +6,11 @@
   padding: 0.5rem 1rem;
   width: 26.25rem;
 
+  @media (max-width: $narrow-screen-breakpoint) {
+    padding: 0.5rem 0;
+    width: 20.5rem;
+  }
+
   &:hover {
     background-color: $grey-8;
     cursor: pointer;
@@ -32,11 +37,19 @@
     text-align: left;
     width: 13.5rem;
 
+    @media (max-width: $narrow-screen-breakpoint) {
+      width: 10rem;
+    }
+
     .name {
       font-size: $large;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+
+      @media (max-width: $narrow-screen-breakpoint) {
+        font-size: $normal;
+      }
     }
 
     .server {
@@ -48,11 +61,23 @@
     text-align: center;
     width: 4rem;
 
+    @media (max-width: $narrow-screen-breakpoint) {
+      width: 3rem;
+    }
+
     .rank {
       font-size: $large;
+
+      @media (max-width: $narrow-screen-breakpoint) {
+        font-size: $normal;
+      }
     }
 
     .rank-diff {
+      @media (max-width: $narrow-screen-breakpoint) {
+        font-size: $small;
+      }
+
       > * {
         display: inline-block;
         vertical-align: middle;
@@ -65,22 +90,27 @@
         height: 0;
         margin-right: 0.25rem;
         width: 0;
+
+        @media (max-width: $narrow-screen-breakpoint) {
+          border-left: 5px solid transparent;
+          border-right: 5px solid transparent;
+        }
       }
 
       .rank-gain {
         border-bottom: 14px solid $green-1;
+
+        @media (max-width: $narrow-screen-breakpoint) {
+          border-bottom: 10px solid $green-1;
+        }
       }
 
       .rank-loss {
         border-top: 14px solid $red-1;
-      }
 
-      .rank-gain-value {
-        color: $green-1;
-      }
-
-      .rank-loss-value {
-        color: $red-1;
+        @media (max-width: $narrow-screen-breakpoint) {
+          border-bottom: 10px solid $red-1;
+        }
       }
     }
   }
@@ -89,8 +119,22 @@
     text-align: right;
     width: 4.5rem;
 
+    @media (max-width: $narrow-screen-breakpoint) {
+      width: 3.25rem;
+    }
+
     .rating {
       font-size: $large;
+
+      @media (max-width: $narrow-screen-breakpoint) {
+        font-size: $normal;
+      }
+    }
+
+    .rating-diff {
+      @media (max-width: $narrow-screen-breakpoint) {
+        font-size: $small;
+      }
     }
   }
 }

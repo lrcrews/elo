@@ -2,7 +2,7 @@ import * as _ from "lodash";
 import Papa from "papaparse";
 import { forkJoin } from "rxjs";
 
-import { ELO_CSV_URLS } from "../data";
+import { ELO_FILE_PATHS } from "../data";
 
 /**
  * Loads the Elo data from the urls defined in ELO_CSV_URLS
@@ -15,7 +15,7 @@ export function loadData(numOfDays = 2) {
   if (numOfDays < 2) {
     numOfDays = 2; // less than 2 is just the existing spreadsheet data 👍
   }
-  const urls = _.slice(ELO_CSV_URLS, 0, numOfDays);
+  const urls = _.slice(ELO_FILE_PATHS, 0, numOfDays);
   return forkJoin(_.map(urls, (url) => parseUrl(url)));
 }
 

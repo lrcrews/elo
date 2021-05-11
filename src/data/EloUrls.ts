@@ -49,8 +49,8 @@
 export const ELO_CSV_URLS = [
   // 2021-05-10
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vQAbUw8JKEH81WPKD2liTzdP1tox5CP6kobIY5ttcSMvUyqmLMCW0R6bsliuIaV59MnLL6ttQSfRuXk/pub?output=csv",
-  // 2021-05-07
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vRIn2o3ElDxiFcfOCcsPyWPxCbIMGvAq2vgi1CdxU4VHxlagFttDH3AHtq-ryDPUg7ymJuX0nFKg1u9/pub?output=csv",
+  // 2021-05-07 (data sync issue 🤬)
+  // "https://docs.google.com/spreadsheets/d/e/2PACX-1vRIn2o3ElDxiFcfOCcsPyWPxCbIMGvAq2vgi1CdxU4VHxlagFttDH3AHtq-ryDPUg7ymJuX0nFKg1u9/pub?output=csv",
   // 2021-05-06
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vQQuOA9fVzUaTONFV5iyPIwGC_mOfmRAMhGttdfhyPyBt7rVuFnXi64oUXyqGnkbbcY2ItMqEB4-6y-/pub?output=csv",
   // 2021-05-05

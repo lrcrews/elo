@@ -40,7 +40,7 @@
  *
  */
 
-const PREFIX = "data/ELO-2021-";
+const PREFIX = `${process.env.PUBLIC_URL}/data/ELO-2021-`;
 
 export const ELO_FILE_PATHS = [
   `${PREFIX}05-10.csv`,

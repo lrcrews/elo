@@ -5,17 +5,27 @@ import { forkJoin } from "rxjs";
 import { ELO_FILE_PATHS } from "../data";
 
 /**
- * Loads the Elo data from the urls defined in ELO_CSV_URLS
- *
- * @param numOfDays if provided data will only load the first X rows from ELO_CSV_URLS, defaults to `2`
- *
- * @returns an `Observable` that is an `Array` of `Guilds` (which is itself an `Array` of `Guild`).
+ * The app needs at least the two most recent days of data to be relevant,
+ * this loads that data based on the urls defined in `ELO_FILE_PATHS`
  */
-export function loadData(numOfDays = 2) {
-  if (numOfDays < 2) {
-    numOfDays = 2; // less than 2 is just the existing spreadsheet data 👍
-  }
-  const urls = _.slice(ELO_FILE_PATHS, 0, numOfDays);
+export function loadBaseData() {
+  return loadData(2);
+}
+
+/**
+ * Loads X days of data from the `ELO_FILE_PATHS` based on the given `daysToLoad`,
+ * skipping days already loaded as defined by the `daysAlreadyLoaded` param.
+ *
+ * @param daysToLoad The number of days we want to load for our `HistoricEloContext`
+ * @param daysAlreadyLoaded The number of days we already loaded (i.e. the length of our `HistoricEloContext`)
+ * @returns An `Observable` array of the results
+ */
+export function loadData(daysToLoad: number, daysAlreadyLoaded = 0) {
+  const urls = _.slice(
+    ELO_FILE_PATHS,
+    daysAlreadyLoaded,
+    daysAlreadyLoaded + daysToLoad
+  );
   return forkJoin(_.map(urls, (url) => parseUrl(url)));
 }
 

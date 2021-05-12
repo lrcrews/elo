@@ -38,7 +38,7 @@
     }
 
     .banner-container {
-      margin-top: -0.75rem;
+      margin-top: -0.5rem;
       width: 6rem;
 
       > img {
@@ -49,6 +49,7 @@
     .info-container {
       .name {
         font-size: $larger;
+        line-height: $larger-line-height;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -76,6 +77,7 @@
 
       .rank {
         font-size: $larger;
+        line-height: $larger-line-height;
       }
 
       .rank-diff {
@@ -113,6 +115,7 @@
 
       .rating {
         font-size: $larger;
+        line-height: $larger-line-height;
       }
     }
   }

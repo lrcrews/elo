@@ -8,7 +8,9 @@ import { Guilds } from "../models";
  */
 
 interface HistoricEloContextProps {
+  daysLoaded: number;
   historicElo: Array<Guilds>;
+  setDaysLoaded: (days: number) => void;
   setHistoricElo: (historicElo: Array<Guilds>) => void;
 }
 

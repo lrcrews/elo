@@ -1,0 +1,119 @@
+@import "../../sass-mixins/mixins.scss";
+
+.guild-info-large {
+  width: 100%;
+
+  @media (max-width: $narrow-screen-breakpoint) {
+    text-align: left;
+  }
+
+  > * {
+    display: inline-block;
+    vertical-align: top;
+
+    @media (max-width: $narrow-screen-breakpoint) {
+      display: block;
+    }
+  }
+
+  .gained-value {
+    color: $green-1;
+  }
+
+  .loss-value {
+    color: $red-1;
+  }
+
+  .banner-and-info-container {
+    text-align: left;
+    width: calc(100% - 12rem);
+
+    @media (max-width: $narrow-screen-breakpoint) {
+      width: 100%;
+    }
+
+    > * {
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    .banner-container {
+      margin-top: -0.75rem;
+      width: 6rem;
+
+      > img {
+        width: 6rem;
+      }
+    }
+
+    .info-container {
+      .name {
+        font-size: $larger;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  .rank-and-rating-container {
+    @media (max-width: $narrow-screen-breakpoint) {
+      padding-top: 1rem;
+    }
+
+    > * {
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    .rank-container {
+      text-align: center;
+      width: 4rem;
+
+      @media (max-width: $narrow-screen-breakpoint) {
+        width: 6rem;
+      }
+
+      .rank {
+        font-size: $larger;
+      }
+
+      .rank-diff {
+        > * {
+          display: inline-block;
+          vertical-align: middle;
+        }
+
+        .rank-gain,
+        .rank-loss {
+          border-left: 7px solid transparent;
+          border-right: 7px solid transparent;
+          height: 0;
+          margin-right: 0.25rem;
+          width: 0;
+        }
+
+        .rank-gain {
+          border-bottom: 14px solid $green-1;
+        }
+
+        .rank-loss {
+          border-top: 14px solid $red-1;
+        }
+      }
+    }
+
+    .rating-container {
+      text-align: right;
+      width: 8rem;
+
+      @media (max-width: $narrow-screen-breakpoint) {
+        width: calc(100% - 6rem);
+      }
+
+      .rating {
+        font-size: $larger;
+      }
+    }
+  }
+}

@@ -78,7 +78,10 @@ function App() {
         <SiteHeader />
         <section id="main-content-container">
           <GuildsProvider guilds={guilds}>
-            <HistoricEloProvider historicElo={historicElo}>
+            <HistoricEloProvider
+              daysLoaded={HISTORIC_ELO_DAYS_TO_LOAD}
+              historicElo={historicElo}
+            >
               <Switch>
                 {routes.map((route, i) => (
                   <RouteWithSubRoutes key={i} {...route} />

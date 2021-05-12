@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import * as _ from "lodash";
 
@@ -10,9 +10,10 @@ import "./Home.scss";
 
 export default function HomeScreen() {
   const { guilds } = useContext(GuildsContext);
+  let history = useHistory();
 
   function navigateToGuildId(id: string) {
-    console.log(`navigate to id: ${id}`);
+    history.push(`/guilds/${id}`);
   }
 
   return (
@@ -26,8 +27,6 @@ export default function HomeScreen() {
           );
         })}
       </ul>
-      {/* )} */}
-      <Link to="/pending-results">pending</Link>
     </section>
   );
 }

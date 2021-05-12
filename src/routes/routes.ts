@@ -1,4 +1,5 @@
 import AboutScreen from "../screens/About/About";
+import GuildScreen from "../screens/Guild/Guild";
 import HomeScreen from "../screens/Home/Home";
 
 export const routes = [
@@ -7,21 +8,11 @@ export const routes = [
     component: AboutScreen,
   },
   {
+    path: "/guilds/:id",
+    component: GuildScreen,
+  },
+  {
     path: "/",
     component: HomeScreen,
   },
-  // {
-  //   path: "/tacos",
-  //   component: Tacos,
-  //   routes: [
-  //     {
-  //       path: "/tacos/bus",
-  //       component: Bus
-  //     },
-  //     {
-  //       path: "/tacos/cart",
-  //       component: Cart
-  //     }
-  //   ]
-  // }
 ];

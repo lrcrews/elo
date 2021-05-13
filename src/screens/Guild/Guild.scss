@@ -2,4 +2,19 @@
 
 #guild-screen {
   text-align: center;
+
+  .graph-wrapper {
+    height: 15rem;
+    width: 100%;
+  }
+
+  .graph-title {
+    text-align: center;
+    width: 100%;
+
+    .rating {
+      font-weight: 600;
+      padding-left: 0.5rem;
+    }
+  }
 }

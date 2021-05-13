@@ -5,12 +5,16 @@ import * as Either from "fp-ts/lib/Either";
 import * as _ from "lodash";
 import { Subscription } from "rxjs";
 
-import { computeDiffs, orderedGuilds } from "../../utils/elo-data-helper";
+import {
+  buildTimeSeriesEntries,
+  computeDiffs,
+  orderedGuilds,
+} from "../../utils/elo-data-helper";
 import { loadData } from "../../utils/herowars-elo-api";
 
 import { ELO_FILE_PATHS, GuildsContext, HistoricEloContext } from "../../data";
-import { Guilds } from "../../models";
-import { GuildInfoLarge } from "../../shared-components";
+import { Guilds, TimeSeriesEntry } from "../../models";
+import { GuildInfoLarge, TimeSeries } from "../../shared-components";
 
 import "./Guild.scss";
 
@@ -22,6 +26,10 @@ export default function GuildScreen() {
   const [guild, setGuild] = useState(
     _.find(guilds, (testGuild) => testGuild.ID === id)
   );
+
+  const [eloEntries, setEloEntries] = useState<Array<TimeSeriesEntry>>([]);
+  const [eloHoverEntryValue, setEloHoverEntryValue] = useState<number>();
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -29,7 +37,7 @@ export default function GuildScreen() {
 
     // We may want to break this out one day so that instead of loading everything
     // here we load X days worth and have a "load more" action on the page.
-    if (loading) {
+    if (loading && id) {
       const currentEloData = _.clone(historicElo);
       const daysLoaded = _.isEmpty(currentEloData) ? 0 : historicElo.length;
       const daysToLoad =
@@ -50,26 +58,31 @@ export default function GuildScreen() {
               console.log(`decode error on url index: ${index}`);
             }
           });
-          const totalElo = _.union(currentEloData, eloRatingsByDay);
-          if (daysLoaded === 0 && totalElo.length > 1) {
+          const totalEloData = _.concat(currentEloData, eloRatingsByDay);
+          if (daysLoaded === 0 && totalEloData.length > 1) {
             // In this scenario the User came directly to this page, so we
             // want to set the Guilds context too.
-            _.each(totalElo[0], (guild, index) => {
+            _.each(totalEloData[0], (guild, index) => {
               guild.RANK = index + 1;
               const { rankingChange, ratingChange } = computeDiffs(
                 guild,
-                totalElo[1]
+                totalEloData[1]
               );
               guild.RANKING_CHANGE = rankingChange;
               guild.RATING_CHANGE = ratingChange;
             });
-            setGuilds(totalElo[0]);
-            setGuild(_.find(totalElo[0], (testGuild) => testGuild.ID === id));
+            setGuilds(totalEloData[0]);
+            setGuild(
+              _.find(totalEloData[0], (testGuild) => testGuild.ID === id)
+            );
           }
-          setHistoricElo(totalElo);
+          setEloEntries(buildTimeSeriesEntries(totalEloData, id));
           setLoading(false);
+          setHistoricElo(totalEloData);
         });
       } else {
+        console.log("no additional data load required.");
+        setEloEntries(buildTimeSeriesEntries(currentEloData, id));
         setLoading(false);
       }
     }
@@ -82,7 +95,20 @@ export default function GuildScreen() {
   return (
     <section id="guild-screen">
       {guild && <GuildInfoLarge guild={guild} />}
-      <h3>Elod Days Loaded: {historicElo.length}</h3>
+      <h3>Elo Rating Over Time</h3>
+      <div className="graph-wrapper">
+        <TimeSeries
+          color="#39dd21" // <- $green-1
+          graphName="elo-ratings"
+          orderedEntries={eloEntries}
+          onHoverValueUpdated={setEloHoverEntryValue}
+        />
+      </div>
+      <div className="graph-title">
+        {eloHoverEntryValue && (
+          <span className="rating">{eloHoverEntryValue}</span>
+        )}
+      </div>
     </section>
   );
 }

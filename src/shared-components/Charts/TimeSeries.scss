@@ -1,0 +1,67 @@
+@import "../../sass-mixins/mixins.scss";
+
+.time-series {
+  height: 100%;
+  width: 100%;
+
+  .time-series-line {
+    fill: none;
+    stroke: $grey-2;
+    stroke-width: 0.25rem;
+  }
+
+  .time-series-axis {
+    line,
+    path {
+      stroke: $grey-6;
+      shape-rendering: crispEdges;
+    }
+
+    &.xAxis {
+      line,
+      path {
+        stroke: $grey-6;
+        stroke-dasharray: 2 2;
+      }
+    }
+
+    &.yAxis {
+      line,
+      path {
+        stroke: none;
+      }
+    }
+
+    text {
+      fill: $grey-1;
+      font-family: "Open Sans", sans-serif;
+      font-size: 0.5rem;
+      font-weight: 400;
+      line-height: 0.75rem;
+      stroke: none;
+      stroke-width: 0;
+    }
+  }
+
+  .grid {
+    line {
+      stroke: $grey-6;
+      stroke-dasharray: 2 2;
+      shape-rendering: crispEdges;
+    }
+
+    path {
+      stroke-width: 0;
+    }
+
+    text {
+      display: none;
+    }
+  }
+
+  .mouse-line {
+    fill: none;
+    stroke: $grey-6;
+    stroke-width: 1px;
+  }
+}

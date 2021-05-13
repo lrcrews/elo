@@ -1,6 +1,6 @@
 import * as _ from "lodash";
 
-import { Guild, Guilds } from "../models";
+import { Guild, Guilds, TimeSeriesEntry } from "../models";
 
 export function orderedGuilds(guilds: Guilds): Guilds {
   return _.chain(guilds)
@@ -33,4 +33,20 @@ export function computeDiffs(
     // Newly ranked guild, no diffs.
     return { rankingChange: 0, ratingChange: 0 };
   }
+}
+
+export function buildTimeSeriesEntries(
+  historicElo: Array<Guilds>,
+  guildId: string
+): Array<TimeSeriesEntry> {
+  return _.chain(historicElo)
+    .map((dayOfElo, index) => {
+      const guild = _.find(dayOfElo, (testGuild) => testGuild.ID === guildId);
+      console.log(
+        `adding ts entry, day: ${index + 1}, rating: ${guild?.RATING || 600}`
+      );
+      return new TimeSeriesEntry(index + 1, guild?.RATING || 600);
+    })
+    .reverse()
+    .value();
 }

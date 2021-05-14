@@ -46,7 +46,6 @@ export default function GuildScreen() {
           : ELO_FILE_PATHS.length - daysLoaded;
 
       if (daysToLoad > 0) {
-        console.log("loading additional data");
         subscription = loadData(daysToLoad, daysLoaded).subscribe((results) => {
           const eloRatingsByDay: Array<Guilds> = [];
           _.each(results, (result, index) => {
@@ -81,7 +80,6 @@ export default function GuildScreen() {
           setHistoricElo(totalEloData);
         });
       } else {
-        console.log("no additional data load required.");
         setEloEntries(buildTimeSeriesEntries(currentEloData, id));
         setLoading(false);
       }

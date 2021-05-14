@@ -42,9 +42,6 @@ export function buildTimeSeriesEntries(
   return _.chain(historicElo)
     .map((dayOfElo, index) => {
       const guild = _.find(dayOfElo, (testGuild) => testGuild.ID === guildId);
-      console.log(
-        `adding ts entry, day: ${index + 1}, rating: ${guild?.RATING || 600}`
-      );
       return new TimeSeriesEntry(index + 1, guild?.RATING || 600);
     })
     .reverse()

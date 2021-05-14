@@ -1,6 +1,8 @@
 @import "../../sass-mixins/mixins.scss";
 
 #guild-screen {
+  margin: 0 auto;
+  max-width: 800px;
   text-align: center;
 
   .graph-wrapper {

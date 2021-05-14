@@ -18,31 +18,32 @@
  * Step 1
  *
  * In your cloned sheet you'll now have access to the hidden tab "Linked Data",
- * copy that data to a new spreadsheet.
+ * download that data as CSV.
  *
  *
  * Step 2
  *
- * In the new spreadsheet add the following header row:
+ * Add to that CSV a header row:
  * ID	NAME	SERVER	BANNER_IMG	RATING	BRACKET_WINS	FLAIR	H	STATUS	J
  *
  *
  * Step 3
  *
- * Export that data as a CSV, saving it as "ELO-<year>-<month>-<day>", e.g.:
+ * Save the CSV as "ELO-<year>-<month>-<day>", e.g.:
  * ELO-2021-05-25.csv
  *
  *
  * Step 4
  *
- * Add the to the `/public/data` directory via a PR || commit and add the
- * file name here 👍
- *
+ * Add the CSV to the `/public/data` directory, add the
+ * file name here, and update the MANUALLY_UPDATED_DATE value in SiteFooter
+ * (via a PR || commit)  👍
  */
 
 const PREFIX = `${process.env.PUBLIC_URL}/data/ELO-2021-`;
 
 export const ELO_FILE_PATHS = [
+  `${PREFIX}05-13.csv`,
   `${PREFIX}05-12.csv`,
   `${PREFIX}05-11.csv`,
   `${PREFIX}05-10.csv`,

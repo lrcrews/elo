@@ -63,7 +63,7 @@ export default function GuildInfoSmall({
     const ratingChange = _.round(guild.RATING_CHANGE || 0, 3);
     return (
       <div className="rating-container">
-        <div className="rating">{guild.RATING}</div>
+        <div className="rating">{_.round(guild.RATING, 1)}</div>
         <div className="rating-diff">
           {ratingChange > 0 && (
             <div className="gained-value">+{ratingChange}</div>

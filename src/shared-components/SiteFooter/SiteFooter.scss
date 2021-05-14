@@ -1,0 +1,28 @@
+@import "../../sass-mixins/mixins.scss";
+
+#site-footer {
+  background-color: rgba(0, 0, 0, 0.6);
+  bottom: 0;
+  box-shadow: 0px 1px 4px #ffffffaa;
+  box-sizing: border-box;
+  height: $site-footer-height;
+  left: 0;
+  padding: 0.25rem;
+  position: fixed;
+  right: 0;
+  text-align: right;
+  width: 100%;
+  z-index: 100;
+
+  .last-updated {
+    color: $white-1;
+    display: inline-block;
+    font-size: $small;
+    line-height: $small-line-height;
+    padding-right: 1rem;
+
+    > .date {
+      font-weight: 600;
+    }
+  }
+}

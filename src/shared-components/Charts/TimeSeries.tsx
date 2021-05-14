@@ -8,7 +8,7 @@ import { TimeSeriesEntry } from "../../models";
 import "./TimeSeries.scss";
 
 export interface TimeSeriesProps {
-  color?: string;
+  color: string;
   graphName: string;
   orderedEntries: Array<TimeSeriesEntry>;
   onHoverValueUpdated: (value: number | undefined) => void;
@@ -16,14 +16,12 @@ export interface TimeSeriesProps {
 
 // WIP
 
-const TimeSeries: React.FC<TimeSeriesProps> = (props) => {
-  const {
-    color = "#21252a",
-    graphName,
-    orderedEntries = [],
-    onHoverValueUpdated,
-  } = props;
-
+export default function TimeSeries({
+  color,
+  graphName,
+  orderedEntries,
+  onHoverValueUpdated,
+}: TimeSeriesProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
 
   const margin = { top: 8, right: 0, bottom: 24, left: 50 };
@@ -280,5 +278,4 @@ const TimeSeries: React.FC<TimeSeriesProps> = (props) => {
       {/* The d3 svg appends in this div */}
     </div>
   );
-};
-export default TimeSeries;
+}

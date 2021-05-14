@@ -10,7 +10,7 @@ import { loadBaseData } from "./utils/herowars-elo-api";
 import { GuildsProvider, HistoricEloProvider } from "./data";
 import { Guilds } from "./models";
 import { routes, RouteWithSubRoutes } from "./routes";
-import { SiteHeader } from "./shared-components";
+import { SiteFooter, SiteHeader } from "./shared-components";
 
 import logo from "./elo-logo.png";
 
@@ -63,6 +63,7 @@ function App() {
           <section id="main-content-container">
             <img src={logo} className="loading-image" alt="loading data" />
           </section>
+          <SiteFooter />
         </div>
       </Router>
     );
@@ -83,6 +84,7 @@ function App() {
             </HistoricEloProvider>
           </GuildsProvider>
         </section>
+        <SiteFooter />
       </div>
     </Router>
   );

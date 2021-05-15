@@ -4,11 +4,11 @@
   display: inline-flex;
   flex-direction: row;
   padding: 0.5rem 1rem;
-  width: 26.25rem;
+  width: 27rem;
 
   @media (max-width: $narrow-screen-breakpoint) {
     padding: 0.5rem 0;
-    width: 20.5rem;
+    width: 22.5rem;
   }
 
   &:hover {
@@ -35,15 +35,16 @@
 
   .info-container {
     text-align: left;
-    width: 13.75rem;
+    width: 14rem;
 
     @media (max-width: $narrow-screen-breakpoint) {
-      width: 10rem;
+      width: 10.75rem;
     }
 
     .name {
       font-size: $large;
       overflow: hidden;
+      padding-right: 0.25rem;
       text-overflow: ellipsis;
       white-space: nowrap;
 
@@ -59,7 +60,7 @@
 
   .rank-container {
     text-align: center;
-    width: 3.75rem;
+    width: 3.5rem;
 
     @media (max-width: $narrow-screen-breakpoint) {
       width: 3rem;
@@ -117,10 +118,10 @@
 
   .rating-container {
     text-align: right;
-    width: 4.5rem;
+    width: 6rem;
 
     @media (max-width: $narrow-screen-breakpoint) {
-      width: 3.25rem;
+      width: 4.5rem;
     }
 
     .rating {

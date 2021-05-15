@@ -1,6 +1,6 @@
 import "./SiteFooter.scss";
 
-const MANUALLY_UPDATED_DATE = 1620941964000;
+const MANUALLY_UPDATED_DATE = 1621119309129;
 
 export default function SiteFooter() {
   return (

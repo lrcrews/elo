@@ -9,16 +9,29 @@
   padding-bottom: 0.5rem;
   position: fixed;
   right: 0;
-  text-align: right;
   width: 100%;
   z-index: 100;
 
+  > * {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .about-link {
+    color: $white-1;
+    font-size: $small;
+    line-height: $small-line-height;
+    padding-left: 1rem;
+    width: calc(50% - 2.25rem); // padding and the 4px inline-block issue
+  }
+
   .last-updated {
     color: $white-1;
-    display: inline-block;
     font-size: $small;
     line-height: $small-line-height;
     padding-right: 1rem;
+    text-align: right;
+    width: 50%;
 
     > .date {
       font-weight: 600;

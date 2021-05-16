@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { GUILDS_PATH, HOME_PATH } from "../../routes/routes";
 
 import "./About.scss";
 
@@ -32,18 +33,18 @@ export default function AboutScreen() {
         .
       </p>
       <p>
-        The <Link to="/">home page</Link> shows the most recent standings along
-        with the gain/loss when applicable, and clicking on a guild will show
-        more guild specific stats!
+        The <Link to={HOME_PATH}>home page</Link> shows the most recent
+        standings along with the gain/loss when applicable, and clicking on a
+        guild will show more guild specific stats!
       </p>
       <h2 className="shameless">Shameless Plugs</h2>
       <p>
         Looking to join a great guild from the leaderboard,{" "}
-        <Link to="/guilds/c24e7945-324e-47f9-9639-e75a4f0ca27a">
+        <Link to={`${GUILDS_PATH}/c24e7945-324e-47f9-9639-e75a4f0ca27a`}>
           TWA Assassins (server 134)
         </Link>{" "}
         and{" "}
-        <Link to="/guilds/06ed47fd-16d1-48c3-be01-2726ab6fdd33">
+        <Link to={`${GUILDS_PATH}/06ed47fd-16d1-48c3-be01-2726ab6fdd33`}>
           ⱫØ₥฿łɆⱠ₳₦Đ (server 365)
         </Link>{" "}
         are welcoming strong players, you can message me (agent_chu#2374) on

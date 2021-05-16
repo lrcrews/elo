@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import * as _ from "lodash";
 
 import { GuildsContext } from "../../data";
+import { GUILDS_PATH } from "../../routes/routes";
 import { GuildInfoSmall } from "../../shared-components";
 
 import "./Home.scss";
@@ -13,7 +14,7 @@ export default function HomeScreen() {
   let history = useHistory();
 
   function navigateToGuildId(id: string) {
-    history.push(`/guilds/${id}`);
+    history.push(`${GUILDS_PATH}/${id}`);
   }
 
   return (

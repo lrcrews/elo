@@ -104,7 +104,7 @@ export default function GuildScreen() {
       </div>
       <div className="graph-title">
         {eloHoverEntryValue && (
-          <span className="rating">{eloHoverEntryValue}</span>
+          <span className="rating">{_.round(eloHoverEntryValue, 3)}</span>
         )}
       </div>
     </section>

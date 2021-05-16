@@ -1,0 +1,24 @@
+@import "../../sass-mixins/mixins.scss";
+
+#servers-screen {
+  margin: 0 auto;
+  max-width: 800px;
+  text-align: center;
+
+  .servers-list {
+    text-align: left;
+    width: 100%;
+
+    .server-name {
+      font-size: $large;
+      line-height: $large-line-height;
+      margin-bottom: 0.5rem;
+      padding: 0.5rem;
+
+      &:hover {
+        background-color: $grey-8;
+        cursor: pointer;
+      }
+    }
+  }
+}

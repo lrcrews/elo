@@ -46,7 +46,7 @@ export default function GuildInfoLarge({ guild }: GuildInfoLargeProps) {
     const rankginChange = guild.RANKING_CHANGE || 0;
     return (
       <div className="rank-container">
-        <div className="rank">{guild.RANK}</div>
+        <div className="rank">#{guild.RANK}</div>
         <div className="rank-diff">
           {rankginChange > 0 && (
             <>

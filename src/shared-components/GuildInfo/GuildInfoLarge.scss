@@ -26,7 +26,7 @@
 
   .banner-and-info-container {
     text-align: left;
-    width: calc(100% - 12rem);
+    width: calc(100% - 13rem - 1px);
 
     @media (max-width: $narrow-screen-breakpoint) {
       width: 100%;
@@ -68,10 +68,15 @@
     }
 
     .rank-container {
-      text-align: center;
+      border-right: 1px solid $white-1;
+      padding-right: 1rem;
+      text-align: right;
       width: 4rem;
 
       @media (max-width: $narrow-screen-breakpoint) {
+        border-right: 0;
+        padding-right: 0;
+        text-align: left;
         width: 6rem;
       }
 

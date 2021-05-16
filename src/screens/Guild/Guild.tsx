@@ -7,7 +7,6 @@ import { Subscription } from "rxjs";
 
 import {
   buildTimeSeriesEntries,
-  computeDiffs,
   orderedGuilds,
 } from "../../utils/elo-data-helper";
 import { loadData } from "../../utils/herowars-elo-api";
@@ -20,12 +19,10 @@ import "./Guild.scss";
 
 export default function GuildScreen() {
   const { historicElo, setHistoricElo } = useContext(HistoricEloContext);
-  const { guilds, setGuilds } = useContext(GuildsContext);
+  const { guilds } = useContext(GuildsContext);
   const { id } = useParams<Record<string, string | undefined>>();
 
-  const [guild, setGuild] = useState(
-    _.find(guilds, (testGuild) => testGuild.ID === id)
-  );
+  const guild = _.find(guilds, (testGuild) => testGuild.ID === id);
 
   const [eloEntries, setEloEntries] = useState<Array<TimeSeriesEntry>>([]);
   const [eloHoverEntryValue, setEloHoverEntryValue] = useState<number>();
@@ -58,23 +55,6 @@ export default function GuildScreen() {
             }
           });
           const totalEloData = _.concat(currentEloData, eloRatingsByDay);
-          if (daysLoaded === 0 && totalEloData.length > 1) {
-            // In this scenario the User came directly to this page, so we
-            // want to set the Guilds context too.
-            _.each(totalEloData[0], (guild, index) => {
-              guild.RANK = index + 1;
-              const { rankingChange, ratingChange } = computeDiffs(
-                guild,
-                totalEloData[1]
-              );
-              guild.RANKING_CHANGE = rankingChange;
-              guild.RATING_CHANGE = ratingChange;
-            });
-            setGuilds(totalEloData[0]);
-            setGuild(
-              _.find(totalEloData[0], (testGuild) => testGuild.ID === id)
-            );
-          }
           setEloEntries(buildTimeSeriesEntries(totalEloData, id));
           setLoading(false);
           setHistoricElo(totalEloData);
@@ -88,7 +68,7 @@ export default function GuildScreen() {
     return () => {
       subscription?.unsubscribe();
     };
-  }, [historicElo, id, loading, setGuilds, setHistoricElo]);
+  }, [historicElo, id, loading, setHistoricElo]);
 
   return (
     <section id="guild-screen">

@@ -45,7 +45,7 @@ export default function AboutScreen() {
         </Link>{" "}
         and{" "}
         <Link to={`${GUILDS_PATH}/06ed47fd-16d1-48c3-be01-2726ab6fdd33`}>
-          ⱫØ₥฿łɆⱠ₳₦Đ (server 365)
+          ⱫØ₥฿łɆⱠ₳₦Đ (server 361)
         </Link>{" "}
         are welcoming strong players, you can message me (agent_chu#2374) on
         discord for more info!

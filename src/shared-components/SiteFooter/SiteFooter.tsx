@@ -4,7 +4,7 @@ import { ABOUT_PATH } from "../../routes/routes";
 
 import "./SiteFooter.scss";
 
-const MANUALLY_UPDATED_DATE = 1621487776199;
+const MANUALLY_UPDATED_DATE = 1621575945178;
 
 export default function SiteFooter() {
   return (

@@ -27,7 +27,11 @@ export default function GuildInfoLarge({ guild }: GuildInfoLargeProps) {
         {bannerUi}
         <div className="info-container">
           <div className="name">{guild.NAME}</div>
-          <div className="server">{`server ${guild.SERVER}`}</div>
+          <div className="server">{`server: ${guild.SERVER}`}</div>
+          {guild.BRACKET_WINS > 0 && (
+            <div>{`bracket wins: ${guild.BRACKET_WINS}`}</div>
+          )}
+          {guild.FLAIR && <div>{guild.FLAIR}</div>}
         </div>
       </div>
     );

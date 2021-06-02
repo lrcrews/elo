@@ -16,7 +16,12 @@
 
     .rating {
       font-weight: 600;
-      padding-left: 0.5rem;
+    }
+
+    .days-ago {
+      font-size: $small;
+      font-weight: normal;
+      margin-top: -0.5rem;
     }
   }
 }

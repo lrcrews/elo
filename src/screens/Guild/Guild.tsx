@@ -25,7 +25,7 @@ export default function GuildScreen() {
   const guild = _.find(guilds, (testGuild) => testGuild.ID === id);
 
   const [eloEntries, setEloEntries] = useState<Array<TimeSeriesEntry>>([]);
-  const [eloHoverEntryValue, setEloHoverEntryValue] = useState<number>();
+  const [eloHoverData, setEloHoverData] = useState<TimeSeriesEntry>();
 
   const [loading, setLoading] = useState(true);
 
@@ -37,10 +37,7 @@ export default function GuildScreen() {
     if (loading && id) {
       const currentEloData = _.clone(historicElo);
       const daysLoaded = _.isEmpty(currentEloData) ? 0 : historicElo.length;
-      const daysToLoad =
-        daysLoaded === 0
-          ? ELO_FILE_PATHS.length
-          : ELO_FILE_PATHS.length - daysLoaded;
+      const daysToLoad = ELO_FILE_PATHS.length - daysLoaded;
 
       if (daysToLoad > 0) {
         subscription = loadData(daysToLoad, daysLoaded).subscribe((results) => {
@@ -79,12 +76,17 @@ export default function GuildScreen() {
           color="#39dd21" // <- $green-1
           graphName="elo-ratings"
           orderedEntries={eloEntries}
-          onHoverValueUpdated={setEloHoverEntryValue}
+          onHoverDataUpdated={setEloHoverData}
         />
       </div>
       <div className="graph-title">
-        {eloHoverEntryValue && (
-          <span className="rating">{_.round(eloHoverEntryValue, 3)}</span>
+        {eloHoverData && (
+          <div className="rating">
+            {_.round(eloHoverData.value, 3)}
+            <div className="days-ago">
+              {eloHoverData.day} war{eloHoverData.day === 1 ? "" : "s"} ago
+            </div>
+          </div>
         )}
       </div>
     </section>

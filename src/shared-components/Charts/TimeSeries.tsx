@@ -11,7 +11,7 @@ export interface TimeSeriesProps {
   color: string;
   graphName: string;
   orderedEntries: Array<TimeSeriesEntry>;
-  onHoverValueUpdated: (value: number | undefined) => void;
+  onHoverDataUpdated: (data: TimeSeriesEntry | undefined) => void;
 }
 
 // WIP
@@ -20,7 +20,7 @@ export default function TimeSeries({
   color,
   graphName,
   orderedEntries,
-  onHoverValueUpdated,
+  onHoverDataUpdated,
 }: TimeSeriesProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
 
@@ -194,7 +194,7 @@ export default function TimeSeries({
           "opacity",
           "0"
         );
-        onHoverValueUpdated(undefined);
+        onHoverDataUpdated(undefined);
       })
       .on("mouseover", () => {
         d3.select(`.mouse-line.${graphName}`).style("opacity", "1");
@@ -267,9 +267,9 @@ export default function TimeSeries({
       (entry) => xScale(entry.day) === xPosition
     );
     if (desiredEntry) {
-      onHoverValueUpdated(desiredEntry.value);
+      onHoverDataUpdated(desiredEntry);
     } else {
-      onHoverValueUpdated(undefined);
+      onHoverDataUpdated(undefined);
     }
   };
 

@@ -60,6 +60,6 @@ export const ELO_FILE_PATHS = [
   `${PREFIX}05-11.csv`,
   `${PREFIX}05-10.csv`,
   // `${PREFIX}05-07.csv`, Lost what would be the data for the 7th 😢
-  `${PREFIX}05-06.csv`,
-  `${PREFIX}05-05.csv`,
+  // `${PREFIX}05-06.csv`, present, but for correctness of "X wars ago" commenting out
+  // `${PREFIX}05-05.csv`, present, but for correctness of "X wars ago" commenting out
 ];

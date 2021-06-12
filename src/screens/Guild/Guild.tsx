@@ -15,6 +15,7 @@ import { ELO_FILE_PATHS, GuildsContext, HistoricEloContext } from "../../data";
 import { Guilds, TimeSeriesEntry } from "../../models";
 import { GuildInfoLarge, TimeSeries } from "../../shared-components";
 
+import logo from "../../elo-logo.png";
 import "./Guild.scss";
 
 export default function GuildScreen() {
@@ -71,24 +72,34 @@ export default function GuildScreen() {
     <section id="guild-screen">
       {guild && <GuildInfoLarge guild={guild} />}
       <h3>Elo Rating Over Time</h3>
-      <div className="graph-wrapper">
-        <TimeSeries
-          color="#39dd21" // <- $green-1
-          graphName="elo-ratings"
-          orderedEntries={eloEntries}
-          onHoverDataUpdated={setEloHoverData}
-        />
-      </div>
-      <div className="graph-title">
-        {eloHoverData && (
-          <div className="rating">
-            {_.round(eloHoverData.value, 3)}
-            <div className="days-ago">
-              {eloHoverData.day} war{eloHoverData.day === 1 ? "" : "s"} ago
-            </div>
+      {loading && (
+        <div className="graph-wrapper">
+          <div>Loading data...</div>
+          <img src={logo} className="loading-image" alt="loading data" />
+        </div>
+      )}
+      {!loading && (
+        <>
+          <div className="graph-wrapper">
+            <TimeSeries
+              color="#39dd21" // <- $green-1
+              graphName="elo-ratings"
+              orderedEntries={eloEntries}
+              onHoverDataUpdated={setEloHoverData}
+            />
           </div>
-        )}
-      </div>
+          <div className="graph-title">
+            {eloHoverData && (
+              <div className="rating">
+                {_.round(eloHoverData.value, 3)}
+                <div className="days-ago">
+                  {eloHoverData.day} war{eloHoverData.day === 1 ? "" : "s"} ago
+                </div>
+              </div>
+            )}
+          </div>
+        </>
+      )}
     </section>
   );
 }

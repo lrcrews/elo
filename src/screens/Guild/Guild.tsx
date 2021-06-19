@@ -18,6 +18,8 @@ import { GuildInfoLarge, TimeSeries } from "../../shared-components";
 import logo from "../../elo-logo.png";
 import "./Guild.scss";
 
+const INITIAL_WAR_DAYS_TO_SHOW = 20;
+
 export default function GuildScreen() {
   const { historicElo, setHistoricElo } = useContext(HistoricEloContext);
   const { guilds } = useContext(GuildsContext);
@@ -38,7 +40,14 @@ export default function GuildScreen() {
     if (loading && id) {
       const currentEloData = _.clone(historicElo);
       const daysLoaded = _.isEmpty(currentEloData) ? 0 : historicElo.length;
-      const daysToLoad = ELO_FILE_PATHS.length - daysLoaded;
+
+      const daysToLoad = INITIAL_WAR_DAYS_TO_SHOW - daysLoaded;
+      // Let's cap how much data we intiailly load 👆,
+      // instead of just loading all of it 👇.
+      // const daysToLoad = ELO_FILE_PATHS.length - daysLoaded;
+
+      // TODO: extract out some code here and add action to page to allow loading
+      //       additional data (instead of just the most recent INITIAL_WAR_DAYS_TO_SHOW)
 
       if (daysToLoad > 0) {
         subscription = loadData(daysToLoad, daysLoaded).subscribe((results) => {

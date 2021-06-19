@@ -13,10 +13,10 @@ export interface GuildInfoLargeProps {
 export default function GuildInfoLarge({ guild }: GuildInfoLargeProps) {
   function renderBannerAndInfo() {
     let bannerUi;
-    if (guild.RANK && guild.RANK <= 200) {
+    if (guild.BANNER_IMG) {
       bannerUi = (
         <div className="banner-container">
-          {guild.BANNER_IMG && <img src={guild.BANNER_IMG} alt="banner" />}
+          <img src={guild.BANNER_IMG} alt="banner" />
         </div>
       );
     } else {

@@ -10,8 +10,13 @@ import "./TimeSeries.scss";
 export interface TimeSeriesProps {
   color: string;
   graphName: string;
+  hideLabels?: boolean;
+  invertColors?: boolean;
   orderedEntries: Array<TimeSeriesEntry>;
-  onHoverDataUpdated: (data: TimeSeriesEntry | undefined) => void;
+  /**
+   * `findIndex` on `orderedEntries`, -1 when not found.
+   */
+  onHoverDataUpdated: (dataIndex: number) => void;
 }
 
 // WIP
@@ -19,12 +24,19 @@ export interface TimeSeriesProps {
 export default function TimeSeries({
   color,
   graphName,
+  hideLabels = false,
+  invertColors = false,
   orderedEntries,
   onHoverDataUpdated,
 }: TimeSeriesProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
 
-  const margin = { top: 8, right: 0, bottom: 24, left: 50 };
+  const margin = {
+    top: 8,
+    right: 0,
+    bottom: 0,
+    left: 50,
+  };
   const tickPadding = 16;
 
   let height: number;
@@ -70,9 +82,9 @@ export default function TimeSeries({
       .domain([orderedEntries[0].day, _.last(orderedEntries)?.day || 100]);
     // y-scale
     let yMax = d3.max(orderedEntries, (entry) => entry.value) || 1000;
-    yMax = yMax + yMax * 0.02;
+    yMax = yMax + yMax * 0.01;
     let yMin = d3.min(orderedEntries, (entry) => entry.value) || 0;
-    yMin = yMin - yMin * 0.02;
+    yMin = yMin - yMin * 0.01;
     yScale = d3.scaleLinear().domain([yMin, yMax]).nice();
   };
 
@@ -194,7 +206,7 @@ export default function TimeSeries({
           "opacity",
           "0"
         );
-        onHoverDataUpdated(undefined);
+        onHoverDataUpdated(-1);
       })
       .on("mouseover", () => {
         d3.select(`.mouse-line.${graphName}`).style("opacity", "1");
@@ -262,19 +274,18 @@ export default function TimeSeries({
   };
 
   const fireOnValueUpdate = (xPosition: number): void => {
-    const desiredEntry = _.find(
+    const desiredEntryIndex = _.findIndex(
       orderedEntries,
       (entry) => xScale(entry.day) === xPosition
     );
-    if (desiredEntry) {
-      onHoverDataUpdated(desiredEntry);
-    } else {
-      onHoverDataUpdated(undefined);
-    }
+    onHoverDataUpdated(desiredEntryIndex);
   };
 
+  let classes = "time-series";
+  if (hideLabels) classes += " hide-labels";
+  if (invertColors) classes += " invert-colors";
   return (
-    <div ref={chartContainerRef} className="time-series">
+    <div ref={chartContainerRef} className={classes}>
       {/* The d3 svg appends in this div */}
     </div>
   );

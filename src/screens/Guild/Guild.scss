@@ -5,23 +5,64 @@
   max-width: 800px;
   text-align: center;
 
-  .graph-wrapper {
+  .loading-graph-wrapper {
+    height: 5rem;
+    width: 100%;
+
+    .loading-image {
+      border-radius: 10rem;
+      display: block;
+      height: 4rem;
+      margin: 1rem auto;
+      pointer-events: none;
+
+      @media (prefers-reduced-motion: no-preference) {
+        animation: logo-spin infinite 20s linear;
+      }
+    }
+  }
+
+  .elo-graph-wrapper {
     height: 15rem;
     width: 100%;
+  }
+
+  .ranking-graph-wrapper {
+    height: 5rem;
+    position: relative;
+    width: 100%;
+
+    .custom-y-axis-label {
+      font-size: $small;
+      left: 1rem;
+      position: absolute;
+      text-orientation: upright;
+      top: 0.5rem;
+      writing-mode: vertical-lr;
+    }
   }
 
   .graph-title {
     text-align: center;
     width: 100%;
 
-    .rating {
+    .hover-data {
       font-weight: 600;
-    }
 
-    .days-ago {
-      font-size: $small;
-      font-weight: normal;
-      margin-top: -0.5rem;
+      .rank,
+      .rating {
+        display: inline-block;
+        padding: 0 0.5rem;
+      }
+
+      .rank {
+        border-right: 1px solid $white-1;
+      }
+
+      .days-ago {
+        font-size: $small;
+        font-weight: normal;
+      }
     }
   }
 }

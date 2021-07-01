@@ -67,7 +67,6 @@ export default function TimeSeries({
 
   useEffect(() => {
     if (!_.isEmpty(orderedEntries)) {
-      console.log("building chart");
       // Remove existing chart if data changed (future case)
       d3.select(chartContainerRef.current).selectAll("*").remove();
       buildChart();
@@ -190,7 +189,6 @@ export default function TimeSeries({
   };
 
   const updateFocus = (): void => {
-    console.log("updating focus");
     const mousePerLine = focus
       .selectAll()
       .data(orderedEntries)

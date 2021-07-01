@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import * as d3 from "d3";
 import * as _ from "lodash";
@@ -17,6 +17,10 @@ export interface TimeSeriesProps {
    * `findIndex` on `orderedEntries`, -1 when not found.
    */
   onHoverDataUpdated: (dataIndex: number) => void;
+  /**
+   * Buffer so the graph doesn't touch the edges, defaults to `0.01` (1%)
+   */
+  yScaleBuffer?: number;
 }
 
 // WIP
@@ -28,6 +32,7 @@ export default function TimeSeries({
   invertColors = false,
   orderedEntries,
   onHoverDataUpdated,
+  yScaleBuffer = 0.01,
 }: TimeSeriesProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
 
@@ -58,8 +63,11 @@ export default function TimeSeries({
   let yAxis: d3.Axis<number | { valueOf(): number }>;
   let yScale: d3.ScaleLinear<number, number>;
 
+  const [mouseLineVisible, setMouseLineVisible] = useState(false);
+
   useEffect(() => {
     if (!_.isEmpty(orderedEntries)) {
+      console.log("building chart");
       // Remove existing chart if data changed (future case)
       d3.select(chartContainerRef.current).selectAll("*").remove();
       buildChart();
@@ -82,9 +90,9 @@ export default function TimeSeries({
       .domain([orderedEntries[0].day, _.last(orderedEntries)?.day || 100]);
     // y-scale
     let yMax = d3.max(orderedEntries, (entry) => entry.value) || 1000;
-    yMax = yMax + yMax * 0.01;
+    yMax = yMax + yMax * yScaleBuffer;
     let yMin = d3.min(orderedEntries, (entry) => entry.value) || 0;
-    yMin = yMin - yMin * 0.01;
+    yMin = yMin - yMin * yScaleBuffer;
     yScale = d3.scaleLinear().domain([yMin, yMax]).nice();
   };
 
@@ -182,6 +190,7 @@ export default function TimeSeries({
   };
 
   const updateFocus = (): void => {
+    console.log("updating focus");
     const mousePerLine = focus
       .selectAll()
       .data(orderedEntries)
@@ -206,14 +215,18 @@ export default function TimeSeries({
           "opacity",
           "0"
         );
+        setMouseLineVisible(false);
         onHoverDataUpdated(-1);
       })
       .on("mouseover", () => {
-        d3.select(`.mouse-line.${graphName}`).style("opacity", "1");
-        d3.selectAll(`.mouse-per-line.${graphName} circle`).style(
-          "opacity",
-          "1"
-        );
+        if (!mouseLineVisible) {
+          setMouseLineVisible(true);
+          d3.select(`.mouse-line.${graphName}`).style("opacity", "1");
+          d3.selectAll(`.mouse-per-line.${graphName} circle`).style(
+            "opacity",
+            "1"
+          );
+        }
       })
       .on("mousemove", (event) => {
         const container = svg.node();

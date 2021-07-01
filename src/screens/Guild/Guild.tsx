@@ -27,9 +27,12 @@ export default function GuildScreen() {
 
   const guild = _.find(guilds, (testGuild) => testGuild.ID === id);
 
-  const [entries, setEntries] = useState<
-    Array<{ rankingEntry: TimeSeriesEntry; ratingEntry: TimeSeriesEntry }>
-  >([]);
+  const [rankingEntries, setRankingEntries] = useState<Array<TimeSeriesEntry>>(
+    []
+  );
+  const [ratingEntries, setRatingEntries] = useState<Array<TimeSeriesEntry>>(
+    []
+  );
   const [eloHoverData, setEloHoverData] = useState(<></>);
 
   const [loading, setLoading] = useState(true);
@@ -64,12 +67,16 @@ export default function GuildScreen() {
             }
           });
           const totalEloData = _.concat(currentEloData, eloRatingsByDay);
-          setEntries(buildTimeSeriesEntries(totalEloData, id));
+          const entries = buildTimeSeriesEntries(totalEloData, id);
+          setRankingEntries(_.map(entries, (entry) => entry.rankingEntry));
+          setRatingEntries(_.map(entries, (entry) => entry.ratingEntry));
           setLoading(false);
           setHistoricElo(totalEloData);
         });
       } else {
-        setEntries(buildTimeSeriesEntries(currentEloData, id));
+        const entries = buildTimeSeriesEntries(currentEloData, id);
+        setRankingEntries(_.map(entries, (entry) => entry.rankingEntry));
+        setRatingEntries(_.map(entries, (entry) => entry.ratingEntry));
         setLoading(false);
       }
     }
@@ -80,11 +87,12 @@ export default function GuildScreen() {
   }, [historicElo, id, loading, setHistoricElo]);
 
   function handleHoverUpdate(desiredIndex: number) {
-    const data = entries[desiredIndex];
-    if (data) {
-      const day = data.ratingEntry.day;
-      const rank = guilds.length - data.rankingEntry.value;
-      const rating = _.round(data.ratingEntry.value, 3);
+    const rankingData = rankingEntries[desiredIndex];
+    const ratingData = ratingEntries[desiredIndex];
+    if (rankingData && ratingData) {
+      const day = ratingData.day;
+      const rank = guilds.length - rankingData.value;
+      const rating = _.round(ratingData.value, 3);
       setEloHoverData(
         <div className="hover-data">
           <div className="days-ago">
@@ -114,8 +122,8 @@ export default function GuildScreen() {
           <div className="elo-graph-wrapper">
             <TimeSeries
               color="#39dd21" // <- $green-1
-              graphName="elo-ratings"
-              orderedEntries={_.map(entries, (entry) => entry.ratingEntry)}
+              graphName="ratings"
+              orderedEntries={ratingEntries}
               onHoverDataUpdated={handleHoverUpdate}
             />
           </div>
@@ -126,8 +134,9 @@ export default function GuildScreen() {
               graphName="rankings"
               hideLabels={true}
               invertColors={true}
-              orderedEntries={_.map(entries, (entry) => entry.rankingEntry)}
+              orderedEntries={rankingEntries}
               onHoverDataUpdated={handleHoverUpdate}
+              yScaleBuffer={0.02}
             />
           </div>
           <div className="graph-title">{eloHoverData}</div>

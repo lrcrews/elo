@@ -38,11 +38,26 @@ export function computeDiffs(
 export function buildTimeSeriesEntries(
   historicElo: Array<Guilds>,
   guildId: string
-): Array<TimeSeriesEntry> {
+): Array<{ rankingEntry: TimeSeriesEntry; ratingEntry: TimeSeriesEntry }> {
   return _.chain(historicElo)
     .map((dayOfElo, index) => {
-      const guild = _.find(dayOfElo, (testGuild) => testGuild.ID === guildId);
-      return new TimeSeriesEntry(index + 1, guild?.RATING || 600);
+      const day = index + 1;
+      const orderedDays = _.sortBy(dayOfElo, (guild) => guild.RATING);
+      const guildIndex = _.findIndex(
+        orderedDays,
+        (guild) => guild.ID === guildId
+      );
+      if (guildIndex === -1) {
+        return {
+          rankingEntry: new TimeSeriesEntry(day, 0),
+          ratingEntry: new TimeSeriesEntry(day, 0),
+        };
+      }
+      const guild = orderedDays[guildIndex];
+      return {
+        rankingEntry: new TimeSeriesEntry(day, guildIndex),
+        ratingEntry: new TimeSeriesEntry(day, guild.RATING),
+      };
     })
     .reverse()
     .value();

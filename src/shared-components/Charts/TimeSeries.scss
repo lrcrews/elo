@@ -1,8 +1,40 @@
 @import "../../sass-mixins/mixins.scss";
 
 .time-series {
+  background-color: $grey-10;
   height: 100%;
   width: 100%;
+
+  &.hide-labels {
+    .grid {
+      line {
+        stroke: none;
+      }
+    }
+
+    .time-series-axis {
+      &.xAxis {
+        line,
+        path {
+          stroke: none;
+        }
+      }
+
+      text {
+        fill: none;
+      }
+    }
+  }
+
+  &.invert-colors {
+    .grid {
+      fill: $white-1;
+    }
+
+    .time-series-line {
+      stroke: $grey-10;
+    }
+  }
 
   .time-series-line {
     fill: none;

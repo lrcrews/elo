@@ -11,7 +11,7 @@ import {
 } from "../../utils/elo-data-helper";
 import { loadData } from "../../utils/herowars-elo-api";
 
-import { ELO_FILE_PATHS, GuildsContext, HistoricEloContext } from "../../data";
+import { GuildsContext, HistoricEloContext } from "../../data";
 import { Guilds, TimeSeriesEntry } from "../../models";
 import { GuildInfoLarge, TimeSeries } from "../../shared-components";
 
@@ -27,8 +27,13 @@ export default function GuildScreen() {
 
   const guild = _.find(guilds, (testGuild) => testGuild.ID === id);
 
-  const [eloEntries, setEloEntries] = useState<Array<TimeSeriesEntry>>([]);
-  const [eloHoverData, setEloHoverData] = useState<TimeSeriesEntry>();
+  const [rankingEntries, setRankingEntries] = useState<Array<TimeSeriesEntry>>(
+    []
+  );
+  const [ratingEntries, setRatingEntries] = useState<Array<TimeSeriesEntry>>(
+    []
+  );
+  const [eloHoverData, setEloHoverData] = useState(<></>);
 
   const [loading, setLoading] = useState(true);
 
@@ -62,12 +67,16 @@ export default function GuildScreen() {
             }
           });
           const totalEloData = _.concat(currentEloData, eloRatingsByDay);
-          setEloEntries(buildTimeSeriesEntries(totalEloData, id));
+          const entries = buildTimeSeriesEntries(totalEloData, id);
+          setRankingEntries(_.map(entries, (entry) => entry.rankingEntry));
+          setRatingEntries(_.map(entries, (entry) => entry.ratingEntry));
           setLoading(false);
           setHistoricElo(totalEloData);
         });
       } else {
-        setEloEntries(buildTimeSeriesEntries(currentEloData, id));
+        const entries = buildTimeSeriesEntries(currentEloData, id);
+        setRankingEntries(_.map(entries, (entry) => entry.rankingEntry));
+        setRatingEntries(_.map(entries, (entry) => entry.ratingEntry));
         setLoading(false);
       }
     }
@@ -77,36 +86,60 @@ export default function GuildScreen() {
     };
   }, [historicElo, id, loading, setHistoricElo]);
 
+  function handleHoverUpdate(desiredIndex: number) {
+    const rankingData = rankingEntries[desiredIndex];
+    const ratingData = ratingEntries[desiredIndex];
+    if (rankingData && ratingData) {
+      const day = ratingData.day;
+      const rank = guilds.length - rankingData.value;
+      const rating = _.round(ratingData.value, 3);
+      setEloHoverData(
+        <div className="hover-data">
+          <div className="days-ago">
+            {day} war{day === 1 ? "" : "s"} ago
+          </div>
+          <div className="rank">#{rank}</div>
+          <div className="rating">{rating}</div>
+        </div>
+      );
+    } else {
+      setEloHoverData(<></>);
+    }
+  }
+
   return (
     <section id="guild-screen">
       {guild && <GuildInfoLarge guild={guild} />}
-      <h3>Elo Rating Over Time</h3>
+      <h3>Rating & Rank Over Time</h3>
       {loading && (
-        <div className="graph-wrapper">
+        <div className="loading-graph-wrapper">
           <div>Loading data...</div>
           <img src={logo} className="loading-image" alt="loading data" />
         </div>
       )}
       {!loading && (
         <>
-          <div className="graph-wrapper">
+          <div className="elo-graph-wrapper">
             <TimeSeries
               color="#39dd21" // <- $green-1
-              graphName="elo-ratings"
-              orderedEntries={eloEntries}
-              onHoverDataUpdated={setEloHoverData}
+              graphName="ratings"
+              orderedEntries={ratingEntries}
+              onHoverDataUpdated={handleHoverUpdate}
             />
           </div>
-          <div className="graph-title">
-            {eloHoverData && (
-              <div className="rating">
-                {_.round(eloHoverData.value, 3)}
-                <div className="days-ago">
-                  {eloHoverData.day} war{eloHoverData.day === 1 ? "" : "s"} ago
-                </div>
-              </div>
-            )}
+          <div className="ranking-graph-wrapper">
+            <div className="custom-y-axis-label">RANK</div>
+            <TimeSeries
+              color="#39dd21" // <- $green-1
+              graphName="rankings"
+              hideLabels={true}
+              invertColors={true}
+              orderedEntries={rankingEntries}
+              onHoverDataUpdated={handleHoverUpdate}
+              yScaleBuffer={0.02}
+            />
           </div>
+          <div className="graph-title">{eloHoverData}</div>
         </>
       )}
     </section>

@@ -42,20 +42,22 @@ export function buildTimeSeriesEntries(
   return _.chain(historicElo)
     .map((dayOfElo, index) => {
       const day = index + 1;
-      const orderedDays = _.sortBy(dayOfElo, (guild) => guild.RATING);
-      const guildIndex = _.findIndex(
-        orderedDays,
-        (guild) => guild.ID === guildId
-      );
+
+      // We are assuming the data is already ordered via the call to
+      // `orderedGuilds` during data load, so we prevent unneeded iteration:
+      //
+      // const orderedDays = _.sortBy(dayOfElo, (guild) => guild.RATING);
+
+      const guildIndex = _.findIndex(dayOfElo, (guild) => guild.ID === guildId);
       if (guildIndex === -1) {
         return {
           rankingEntry: new TimeSeriesEntry(day, 0),
           ratingEntry: new TimeSeriesEntry(day, 0),
         };
       }
-      const guild = orderedDays[guildIndex];
+      const guild = dayOfElo[guildIndex];
       return {
-        rankingEntry: new TimeSeriesEntry(day, guildIndex),
+        rankingEntry: new TimeSeriesEntry(day, guildIndex + 1),
         ratingEntry: new TimeSeriesEntry(day, guild.RATING),
       };
     })

@@ -91,14 +91,13 @@ export default function GuildScreen() {
     const ratingData = ratingEntries[desiredIndex];
     if (rankingData && ratingData) {
       const day = ratingData.day;
-      const rank = guilds.length - rankingData.value;
       const rating = _.round(ratingData.value, 3);
       setEloHoverData(
         <div className="hover-data">
           <div className="days-ago">
             {day} war{day === 1 ? "" : "s"} ago
           </div>
-          <div className="rank">#{rank}</div>
+          <div className="rank">#{rankingData.value}</div>
           <div className="rating">{rating}</div>
         </div>
       );
@@ -133,6 +132,7 @@ export default function GuildScreen() {
               color="#39dd21" // <- $green-1
               graphName="rankings"
               hideLabels={true}
+              inverseValues={true}
               invertColors={true}
               orderedEntries={rankingEntries}
               onHoverDataUpdated={handleHoverUpdate}

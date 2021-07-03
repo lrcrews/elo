@@ -11,6 +11,11 @@ export interface TimeSeriesProps {
   color: string;
   graphName: string;
   hideLabels?: boolean;
+  /**
+   * Inverses the y-axis values (useful for showing "positive" graphs
+   * for values that are better approaching 0, like rank)
+   */
+  inverseValues?: boolean;
   invertColors?: boolean;
   orderedEntries: Array<TimeSeriesEntry>;
   /**
@@ -29,6 +34,7 @@ export default function TimeSeries({
   color,
   graphName,
   hideLabels = false,
+  inverseValues = false,
   invertColors = false,
   orderedEntries,
   onHoverDataUpdated,
@@ -92,7 +98,8 @@ export default function TimeSeries({
     yMax = yMax + yMax * yScaleBuffer;
     let yMin = d3.min(orderedEntries, (entry) => entry.value) || 0;
     yMin = yMin - yMin * yScaleBuffer;
-    yScale = d3.scaleLinear().domain([yMin, yMax]).nice();
+    const yDomain = inverseValues ? [yMax, yMin] : [yMin, yMax];
+    yScale = d3.scaleLinear().domain(yDomain).nice();
   };
 
   const initAxes = (): void => {

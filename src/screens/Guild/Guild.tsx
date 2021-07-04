@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import * as Either from "fp-ts/lib/Either";
@@ -11,7 +11,7 @@ import {
 } from "../../utils/elo-data-helper";
 import { loadData } from "../../utils/herowars-elo-api";
 
-import { GuildsContext, HistoricEloContext } from "../../data";
+import { ELO_FILE_PATHS, GuildsContext, HistoricEloContext } from "../../data";
 import { Guilds, TimeSeriesEntry } from "../../models";
 import { GuildInfoLarge, TimeSeries } from "../../shared-components";
 
@@ -24,6 +24,8 @@ export default function GuildScreen() {
   const { historicElo, setHistoricElo } = useContext(HistoricEloContext);
   const { guilds } = useContext(GuildsContext);
   const { id } = useParams<Record<string, string | undefined>>();
+
+  const totalDaysAvailable = ELO_FILE_PATHS.length;
 
   const guild = _.find(guilds, (testGuild) => testGuild.ID === id);
 
@@ -118,6 +120,9 @@ export default function GuildScreen() {
       )}
       {!loading && (
         <>
+          <div className="data-count">
+            ({rankingEntries.length} of {totalDaysAvailable} wars loaded)
+          </div>
           <div className="elo-graph-wrapper">
             <TimeSeries
               color="#39dd21" // <- $green-1

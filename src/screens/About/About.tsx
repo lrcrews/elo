@@ -41,14 +41,14 @@ export default function AboutScreen() {
       <p>
         Looking to join a great guild from the leaderboard,{" "}
         <Link to={`${GUILDS_PATH}/c24e7945-324e-47f9-9639-e75a4f0ca27a`}>
-          TWA Assassins (server 134)
+          Tribe Assassins (server 134)
         </Link>{" "}
         and{" "}
-        <Link to={`${GUILDS_PATH}/06ed47fd-16d1-48c3-be01-2726ab6fdd33`}>
-          VØØĐOO ฿ⱤɆ₩ (server 361)
+        <Link to={`${GUILDS_PATH}/bffdd348-d3e7-4d73-90e6-9ed31a8ddeda`}>
+          Hold My Beer (server 305)
         </Link>{" "}
-        are welcoming strong players, you can message me (agent_chu#2374) on
-        discord for more info!
+        are open to talk, you can message me (agent_chu#2374) on discord for
+        more info!
       </p>
       <p>
         Enjoying this so much you'd like to buy me a beer? Well, you are awesome

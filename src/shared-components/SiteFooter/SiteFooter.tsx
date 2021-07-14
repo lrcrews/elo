@@ -13,12 +13,13 @@ export default function SiteFooter() {
         <Link to={ABOUT_PATH}>About</Link>
       </div>
       <div className="last-updated">
-        Last updated:{" "}
+        Updated:{" "}
         <span className="date">
           {new Date(MANUALLY_UPDATED_DATE).toLocaleDateString("en-US", {
             weekday: "short",
             month: "long",
             day: "numeric",
+            hour: "2-digit",
           })}
         </span>
       </div>

@@ -18,7 +18,7 @@ import { GuildInfoLarge, TimeSeries } from "../../shared-components";
 import logo from "../../elo-logo.png";
 import "./Guild.scss";
 
-const INITIAL_WAR_DAYS_TO_SHOW = 20;
+const WAR_DAYS_TO_LOAD = 20;
 
 export default function GuildScreen() {
   const { historicElo, setHistoricElo } = useContext(HistoricEloContext);
@@ -48,7 +48,7 @@ export default function GuildScreen() {
       const currentEloData = _.clone(historicElo);
       const daysLoaded = _.isEmpty(currentEloData) ? 0 : historicElo.length;
 
-      const daysToLoad = INITIAL_WAR_DAYS_TO_SHOW - daysLoaded;
+      const daysToLoad = WAR_DAYS_TO_LOAD - daysLoaded;
       // Let's cap how much data we intiailly load 👆,
       // instead of just loading all of it 👇.
       // const daysToLoad = ELO_FILE_PATHS.length - daysLoaded;
@@ -88,6 +88,34 @@ export default function GuildScreen() {
     };
   }, [historicElo, id, loading, setHistoricElo]);
 
+  function loadMore() {
+    if (!id) return;
+    const currentEloData = _.clone(historicElo);
+    const daysLoaded = rankingEntries.length;
+    let daysToLoad = daysLoaded + WAR_DAYS_TO_LOAD;
+    if (daysToLoad > totalDaysAvailable) {
+      daysToLoad = totalDaysAvailable;
+    }
+    loadData(daysToLoad, daysLoaded).subscribe((results) => {
+      const eloRatingsByDay: Array<Guilds> = [];
+      _.each(results, (result, index) => {
+        const data = result.data;
+        const decodedGuilds = Guilds.decode(data);
+        if (Either.isRight(decodedGuilds)) {
+          eloRatingsByDay.push(orderedGuilds(decodedGuilds.right));
+        } else {
+          console.log(`decode error on url index: ${index}`);
+        }
+      });
+      const totalEloData = _.concat(currentEloData, eloRatingsByDay);
+      const entries = buildTimeSeriesEntries(totalEloData, id);
+      setRankingEntries(_.map(entries, (entry) => entry.rankingEntry));
+      setRatingEntries(_.map(entries, (entry) => entry.ratingEntry));
+      setLoading(false);
+      setHistoricElo(totalEloData);
+    });
+  }
+
   function handleHoverUpdate(desiredIndex: number) {
     const rankingData = rankingEntries[desiredIndex];
     const ratingData = ratingEntries[desiredIndex];
@@ -122,6 +150,15 @@ export default function GuildScreen() {
         <>
           <div className="data-count">
             ({rankingEntries.length} of {totalDaysAvailable} wars loaded)
+            {rankingEntries.length < totalDaysAvailable && (
+              <button
+                className="load-more-button"
+                type="button"
+                onClick={loadMore}
+              >
+                load more
+              </button>
+            )}
           </div>
           <div className="elo-graph-wrapper">
             <TimeSeries

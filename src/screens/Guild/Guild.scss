@@ -13,6 +13,7 @@
 
   .loading-graph-wrapper {
     height: 5rem;
+    text-align: center;
     width: 100%;
 
     .loading-image {
@@ -32,6 +33,19 @@
     font-size: $small;
     line-height: $small-line-height;
     margin: 0 0 1rem 1.25rem;
+
+    .load-more-button {
+      background-color: $grey-10;
+      border: 1px solid $white-1;
+      border-radius: 3px;
+      color: $white-1;
+      cursor: pointer;
+      margin-left: 1.5rem;
+
+      &:hover {
+        background-color: $grey-8;
+      }
+    }
   }
 
   .elo-graph-wrapper {

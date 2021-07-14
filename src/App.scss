@@ -19,7 +19,7 @@
     box-sizing: border-box;
     height: calc(100% - #{$site-header-height});
     overflow: auto;
-    padding: calc(2rem + #{$site-header-height}) 1.5rem;
+    padding: calc(2rem + #{$site-header-height}) 1rem;
     width: 100%;
   }
 }

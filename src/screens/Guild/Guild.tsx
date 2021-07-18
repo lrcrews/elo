@@ -92,7 +92,7 @@ export default function GuildScreen() {
     if (!id) return;
     const currentEloData = _.clone(historicElo);
     const daysLoaded = rankingEntries.length;
-    let daysToLoad = daysLoaded + WAR_DAYS_TO_LOAD;
+    let daysToLoad = WAR_DAYS_TO_LOAD;
     if (daysToLoad > totalDaysAvailable) {
       daysToLoad = totalDaysAvailable;
     }

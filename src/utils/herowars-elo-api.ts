@@ -17,7 +17,7 @@ export function loadBaseData() {
  * skipping days already loaded as defined by the `daysAlreadyLoaded` param.
  *
  * @param daysToLoad The number of days we want to load for our `HistoricEloContext`
- * @param daysAlreadyLoaded The number of days we already loaded (i.e. the length of our `HistoricEloContext`)
+ * @param daysAlreadyLoaded The number of days we already loaded (e.g. the length of our `HistoricEloContext`)
  * @returns An `Observable` array of the results
  */
 export function loadData(daysToLoad: number, daysAlreadyLoaded = 0) {

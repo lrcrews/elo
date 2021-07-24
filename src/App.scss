@@ -21,6 +21,10 @@
     overflow: auto;
     padding: calc(2rem + #{$site-header-height}) 1rem;
     width: 100%;
+
+    @media (max-width: $narrow-screen-breakpoint) {
+      padding: calc(2rem + #{$site-header-height}) 0;
+    }
   }
 }
 

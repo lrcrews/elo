@@ -8,7 +8,7 @@
 
   @media (max-width: $narrow-screen-breakpoint) {
     padding: 0.5rem 0;
-    width: 22.5rem;
+    width: 21.5rem;
   }
 
   &:hover {
@@ -31,6 +31,14 @@
     > img {
       width: 4rem;
     }
+
+    @media (max-width: $narrow-screen-breakpoint) {
+      width: 3.5rem;
+
+      > img {
+        width: 3.5rem;
+      }
+    }
   }
 
   .info-container {
@@ -38,7 +46,7 @@
     width: 14rem;
 
     @media (max-width: $narrow-screen-breakpoint) {
-      width: 10.75rem;
+      width: 10.25rem;
     }
 
     .name {

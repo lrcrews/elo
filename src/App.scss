@@ -23,7 +23,7 @@
     width: 100%;
 
     @media (max-width: $narrow-screen-breakpoint) {
-      padding: calc(2rem + #{$site-header-height}) 0;
+      padding: calc(2rem + #{$site-header-height}) 0.5rem;
     }
   }
 }

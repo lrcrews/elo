@@ -43,6 +43,7 @@
 const PREFIX = `${process.env.PUBLIC_URL}/data/ELO-2021-`;
 
 export const ELO_FILE_PATHS = [
+  `${PREFIX}08-02.csv`,
   `${PREFIX}07-30.csv`,
   `${PREFIX}07-29.csv`,
   `${PREFIX}07-28.csv`,

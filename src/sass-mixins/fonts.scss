@@ -14,6 +14,10 @@ $large-line-height: 2rem;
 $normal-line-height: 1.5rem;
 $small-line-height: 1rem;
 
+%mono-font {
+  font-family: 'Courier New', Courier, monospace;
+}
+
 %accent-font {
   font-family: "Roboto Slab", serif;
 }
@@ -27,4 +31,8 @@ $small-line-height: 1rem;
   @extend %main-font;
   font-size: $normal;
   line-height: $normal-line-height;
+}
+
+@mixin font-mono {
+  @extend %mono-font;  
 }

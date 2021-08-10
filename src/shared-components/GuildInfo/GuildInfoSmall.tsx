@@ -9,11 +9,13 @@ import "./GuildInfoSmall.scss";
 export interface GuildInfoSmallProps {
   guild: Guild;
   onClick: (guildId: string) => void;
+  selected?: boolean;
 }
 
 export default function GuildInfoSmall({
   guild,
   onClick,
+  selected = false,
 }: GuildInfoSmallProps) {
   function renderRankData() {
     const rankginChange = guild.RANKING_CHANGE || 0;
@@ -77,7 +79,7 @@ export default function GuildInfoSmall({
 
   return (
     <div
-      className="guild-info-small"
+      className={selected ? "guild-info-small selected" : "guild-info-small"}
       tabIndex={0}
       aria-label={`View ${guild.NAME} guild.`}
       role="link"

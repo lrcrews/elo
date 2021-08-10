@@ -16,6 +16,10 @@
     cursor: pointer;
   }
 
+  &.selected {
+    background-color: $grey-7;
+  }
+
   .gained-value {
     color: $green-1;
   }

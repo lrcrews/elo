@@ -7,7 +7,6 @@ import { Guild, Guilds } from "../../models";
 import { GuildInfoSmall } from "../../shared-components";
 
 import "./Breakdown.scss";
-import { orderedGuilds } from "../../utils/elo-data-helper";
 
 interface ExpandedServers {
   [key: string]: boolean;
@@ -75,7 +74,7 @@ export default function BreakdownScreen() {
   function meanRankText() {
     let value = "-";
     if (selectedGuilds.length > 0) {
-      value = `${_.reduce(selectedGuilds, (sum, guild) => sum += guild.RANK || 0, 0) / selectedGuilds.length}`;
+      value = `${_.round(_.reduce(selectedGuilds, (sum, guild) => sum += guild.RANK || 0, 0) / selectedGuilds.length, 2)}`;
     }
     return `**mean rank**: ${value}`; 
   }
@@ -95,7 +94,7 @@ export default function BreakdownScreen() {
       const rank = guild.RANK || 0;
       return rank >= minRank && rank <= maxRank;
     });
-    value = `${(relevantGuilds.length / selectedGuilds.length) * 100}`;
+    value = `${_.round((relevantGuilds.length / selectedGuilds.length) * 100, 2)}`;
     return `**${value}% (${relevantGuilds.length} guilds)** are ranked ${minRank} - ${maxRank}`;
   }
 

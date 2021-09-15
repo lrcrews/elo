@@ -43,6 +43,7 @@
 const PREFIX = `${process.env.PUBLIC_URL}/data/ELO-2021-`;
 
 export const ELO_FILE_PATHS = [
+  `${PREFIX}09-14.csv`,
   `${PREFIX}09-13.csv`,
   `${PREFIX}09-10.csv`,
   `${PREFIX}09-09.csv`,
@@ -134,7 +135,4 @@ export const ELO_FILE_PATHS = [
   `${PREFIX}05-12.csv`,
   `${PREFIX}05-11.csv`,
   `${PREFIX}05-10.csv`,
-  // `${PREFIX}05-07.csv`, Lost what would be the data for the 7th 😢
-  // `${PREFIX}05-06.csv`, present, but for correctness of "X wars ago" commenting out
-  // `${PREFIX}05-05.csv`, present, but for correctness of "X wars ago" commenting out
 ];

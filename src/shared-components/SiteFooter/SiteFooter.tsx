@@ -4,13 +4,14 @@ import { ABOUT_PATH, BREAKDOWN_PATH } from "../../routes/routes";
 
 import "./SiteFooter.scss";
 
-const MANUALLY_UPDATED_DATE = 1632080067641;
+const MANUALLY_UPDATED_DATE = 1632463315823;
 
 export default function SiteFooter() {
   return (
     <footer id="site-footer">
       <div className="about-link">
-        <Link to={ABOUT_PATH}>About</Link> | <Link to={BREAKDOWN_PATH}>Tools</Link>
+        <Link to={ABOUT_PATH}>About</Link> |{" "}
+        <Link to={BREAKDOWN_PATH}>Tools</Link>
       </div>
       <div className="last-updated">
         Updated:{" "}

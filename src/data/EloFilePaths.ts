@@ -193,12 +193,12 @@ export const ELO_FILE_PATHS = [
   `${PREFIX}2021-05-26.csv`,
   `${PREFIX}2021-05-25.csv`,
   `${PREFIX}2021-05-24.csv`,
-  `${PREFIX}2021-05-21.csv`,
-  `${PREFIX}2021-05-20.csv`,
-  `${PREFIX}2021-05-19.csv`,
-  `${PREFIX}2021-05-18.csv`,
-  `${PREFIX}2021-05-17.csv`,
-  // Slug size too big, removing 5 oldest files (still exist on laptop)
+  // Slug size too big, removing 10 oldest files (still exist on laptop)
+  //`${PREFIX}2021-05-21.csv`,
+  //`${PREFIX}2021-05-20.csv`,
+  //`${PREFIX}2021-05-19.csv`,
+  //`${PREFIX}2021-05-18.csv`,
+  //`${PREFIX}2021-05-17.csv`,
   // `${PREFIX}2021-05-14.csv`,
   // `${PREFIX}2021-05-13.csv`,
   // `${PREFIX}2021-05-12.csv`,

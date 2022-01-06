@@ -31,7 +31,8 @@ export default function GuildInfoLarge({ guild }: GuildInfoLargeProps) {
           {guild.BRACKET_WINS > 0 && (
             <div>{`bracket wins: ${guild.BRACKET_WINS}`}</div>
           )}
-          {guild.FLAIR && <div>{guild.FLAIR}</div>}
+          {/* Hiding flair for now, may come back with new CSW system */}
+          {/* {guild.FLAIR && <div>{guild.FLAIR}</div>} */}
         </div>
       </div>
     );

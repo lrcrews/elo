@@ -57,7 +57,8 @@ export default function GuildInfoSmall({
       <div className="info-container">
         <div className="name">{guild.NAME}</div>
         <div className="server">{`server ${guild.SERVER}`}</div>
-        {guild.FLAIR && <div className="flair">{guild.FLAIR}</div>}
+        {/* Hiding flair for now, may come back with new CSW system */}
+        {/* {guild.FLAIR && <div className="flair">{guild.FLAIR}</div>} */}
       </div>
     );
   }

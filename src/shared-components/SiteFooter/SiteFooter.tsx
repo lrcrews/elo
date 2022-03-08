@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import { ABOUT_PATH, BREAKDOWN_PATH } from "../../routes/routes";
+import { ABOUT_PATH } from "../../routes/routes";
 
 import "./SiteFooter.scss";
 
@@ -10,8 +10,7 @@ export default function SiteFooter() {
   return (
     <footer id="site-footer">
       <div className="about-link">
-        <Link to={ABOUT_PATH}>About</Link> |{" "}
-        <Link to={BREAKDOWN_PATH}>Tools</Link>
+        <Link to={ABOUT_PATH}>About</Link>
       </div>
       <div className="last-updated">
         Updated:{" "}

@@ -45,7 +45,7 @@ export default function AboutScreen() {
         </Link>{" "}
         and{" "}
         <Link to={`${GUILDS_PATH}/bffdd348-d3e7-4d73-90e6-9ed31a8ddeda`}>
-          Hold My Beer (server 305)
+          The Drunk Pandas (server 305)
         </Link>{" "}
         are open to talk, you can message me (agent_chu#2374) on discord for
         more info!

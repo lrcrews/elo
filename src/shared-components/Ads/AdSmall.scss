@@ -1,0 +1,24 @@
+@import "../../sass-mixins/mixins.scss";
+
+.ad-small {
+  display: inline-flex;
+  flex-direction: row;
+  padding: 0.5rem 1rem;
+  width: 27rem;
+
+  @media (max-width: $narrow-screen-breakpoint) {
+    padding: 0.5rem 0;
+    width: 21.5rem;
+  }
+
+  &:hover {
+    background-color: #663399;
+    cursor: pointer;
+  }
+
+  .ad-image {
+    display: block;
+    pointer-events: none;
+    width: 100%;
+  }
+}

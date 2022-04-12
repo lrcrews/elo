@@ -23,30 +23,30 @@ function App() {
 
   useEffect(() => {
     const subscription = loadBaseData().subscribe((results) => {
-      const eloRatingsByDay: Array<Guilds> = [];
+      const eloRatingsByWeek: Array<Guilds> = [];
       _.each(results, (result, index) => {
         const data = result.data;
         const decodedGuilds = Guilds.decode(data);
         if (Either.isRight(decodedGuilds)) {
-          eloRatingsByDay.push(orderedGuilds(decodedGuilds.right));
+          eloRatingsByWeek.push(orderedGuilds(decodedGuilds.right));
         } else {
           console.log(`decode error on url index: ${index}`);
         }
       });
-      setHistoricElo(eloRatingsByDay);
-      if (eloRatingsByDay.length > 1) {
+      setHistoricElo(eloRatingsByWeek);
+      if (eloRatingsByWeek.length > 1) {
         // No "decode error"?!?, let's compute some diffs 🎉
-        _.each(eloRatingsByDay[0], (guild, index) => {
+        _.each(eloRatingsByWeek[0], (guild, index) => {
           guild.RANK = index + 1;
           const { rankingChange, ratingChange } = computeDiffs(
             guild,
-            eloRatingsByDay[1]
+            eloRatingsByWeek[1]
           );
           guild.RANKING_CHANGE = rankingChange;
           guild.RATING_CHANGE = ratingChange;
         });
       }
-      setGuilds(eloRatingsByDay[0]);
+      setGuilds(eloRatingsByWeek[0]);
       setLoading(false);
     });
 

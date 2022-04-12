@@ -1,3 +1,3 @@
 export default class TimeSeriesEntry {
-  constructor(public day: number, public value: number) {}
+  constructor(public week: number, public value: number) {}
 }

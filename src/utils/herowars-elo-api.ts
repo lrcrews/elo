@@ -5,7 +5,7 @@ import { forkJoin } from "rxjs";
 import { ELO_FILE_PATHS } from "../data";
 
 /**
- * The app needs at least the two most recent days of data to be relevant,
+ * The app needs at least the two most recent weeks of data to be relevant,
  * this loads that data based on the urls defined in `ELO_FILE_PATHS`
  */
 export function loadBaseData() {
@@ -13,18 +13,18 @@ export function loadBaseData() {
 }
 
 /**
- * Loads X days of data from the `ELO_FILE_PATHS` based on the given `daysToLoad`,
- * skipping days already loaded as defined by the `daysAlreadyLoaded` param.
+ * Loads X weeks of data from the `ELO_FILE_PATHS` based on the given `weeksToLoad`,
+ * skipping weeks already loaded as defined by the `weeksAlreadyLoaded` param.
  *
- * @param daysToLoad The number of days we want to load for our `HistoricEloContext`
- * @param daysAlreadyLoaded The number of days we already loaded (e.g. the length of our `HistoricEloContext`)
+ * @param weeksToLoad The number of weeks we want to load for our `HistoricEloContext`
+ * @param weeksAlreadyLoaded The number of weeks we already loaded (e.g. the length of our `HistoricEloContext`)
  * @returns An `Observable` array of the results
  */
-export function loadData(daysToLoad: number, daysAlreadyLoaded = 0) {
+export function loadData(weeksToLoad: number, weeksAlreadyLoaded = 0) {
   const urls = _.slice(
     ELO_FILE_PATHS,
-    daysAlreadyLoaded,
-    daysAlreadyLoaded + daysToLoad
+    weeksAlreadyLoaded,
+    weeksAlreadyLoaded + weeksToLoad
   );
   return forkJoin(_.map(urls, (url) => parseUrl(url)));
 }

@@ -40,25 +40,26 @@ export function buildTimeSeriesEntries(
   guildId: string
 ): Array<{ rankingEntry: TimeSeriesEntry; ratingEntry: TimeSeriesEntry }> {
   return _.chain(historicElo)
-    .map((dayOfElo, index) => {
-      const day = index + 1;
+    .map((weekOfElo, index) => {
+      const week = index + 1;
 
       // We are assuming the data is already ordered via the call to
-      // `orderedGuilds` during data load, so we prevent unneeded iteration:
-      //
-      // const orderedDays = _.sortBy(dayOfElo, (guild) => guild.RATING);
+      // `orderedGuilds` during data load, so we avoid unneeded iteration.
 
-      const guildIndex = _.findIndex(dayOfElo, (guild) => guild.ID === guildId);
+      const guildIndex = _.findIndex(
+        weekOfElo,
+        (guild) => guild.ID === guildId
+      );
       if (guildIndex === -1) {
         return {
-          rankingEntry: new TimeSeriesEntry(day, 0),
-          ratingEntry: new TimeSeriesEntry(day, 0),
+          rankingEntry: new TimeSeriesEntry(week, 0),
+          ratingEntry: new TimeSeriesEntry(week, 0),
         };
       }
-      const guild = dayOfElo[guildIndex];
+      const guild = weekOfElo[guildIndex];
       return {
-        rankingEntry: new TimeSeriesEntry(day, guildIndex + 1),
-        ratingEntry: new TimeSeriesEntry(day, guild.RATING),
+        rankingEntry: new TimeSeriesEntry(week, guildIndex + 1),
+        ratingEntry: new TimeSeriesEntry(week, guild.RATING),
       };
     })
     .reverse()

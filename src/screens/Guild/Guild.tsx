@@ -18,14 +18,14 @@ import { GuildInfoLarge, TimeSeries } from "../../shared-components";
 import logo from "../../elo-logo.png";
 import "./Guild.scss";
 
-const WAR_DAYS_TO_LOAD = 20;
+const WAR_WEEKS_TO_LOAD = 20;
 
 export default function GuildScreen() {
   const { historicElo, setHistoricElo } = useContext(HistoricEloContext);
   const { guilds } = useContext(GuildsContext);
   const { id } = useParams<Record<string, string | undefined>>();
 
-  const totalDaysAvailable = ELO_FILE_PATHS.length;
+  const totalWeeksAvailable = ELO_FILE_PATHS.length;
 
   const guild = _.find(guilds, (testGuild) => testGuild.ID === id);
 
@@ -42,39 +42,33 @@ export default function GuildScreen() {
   useEffect(() => {
     let subscription: Subscription;
 
-    // We may want to break this out one day so that instead of loading everything
-    // here we load X days worth and have a "load more" action on the page.
     if (loading && id) {
       const currentEloData = _.clone(historicElo);
-      const daysLoaded = _.isEmpty(currentEloData) ? 0 : historicElo.length;
+      const weeksLoaded = _.isEmpty(currentEloData) ? 0 : historicElo.length;
 
-      const daysToLoad = WAR_DAYS_TO_LOAD - daysLoaded;
-      // Let's cap how much data we intiailly load 👆,
-      // instead of just loading all of it 👇.
-      // const daysToLoad = ELO_FILE_PATHS.length - daysLoaded;
+      const weeksToLoad = WAR_WEEKS_TO_LOAD - weeksLoaded;
 
-      // TODO: extract out some code here and add action to page to allow loading
-      //       additional data (instead of just the most recent INITIAL_WAR_DAYS_TO_SHOW)
-
-      if (daysToLoad > 0) {
-        subscription = loadData(daysToLoad, daysLoaded).subscribe((results) => {
-          const eloRatingsByDay: Array<Guilds> = [];
-          _.each(results, (result, index) => {
-            const data = result.data;
-            const decodedGuilds = Guilds.decode(data);
-            if (Either.isRight(decodedGuilds)) {
-              eloRatingsByDay.push(orderedGuilds(decodedGuilds.right));
-            } else {
-              console.log(`decode error on url index: ${index}`);
-            }
-          });
-          const totalEloData = _.concat(currentEloData, eloRatingsByDay);
-          const entries = buildTimeSeriesEntries(totalEloData, id);
-          setRankingEntries(_.map(entries, (entry) => entry.rankingEntry));
-          setRatingEntries(_.map(entries, (entry) => entry.ratingEntry));
-          setLoading(false);
-          setHistoricElo(totalEloData);
-        });
+      if (weeksToLoad > 0) {
+        subscription = loadData(weeksToLoad, weeksLoaded).subscribe(
+          (results) => {
+            const eloRatingsByWeek: Array<Guilds> = [];
+            _.each(results, (result, index) => {
+              const data = result.data;
+              const decodedGuilds = Guilds.decode(data);
+              if (Either.isRight(decodedGuilds)) {
+                eloRatingsByWeek.push(orderedGuilds(decodedGuilds.right));
+              } else {
+                console.log(`decode error on url index: ${index}`);
+              }
+            });
+            const totalEloData = _.concat(currentEloData, eloRatingsByWeek);
+            const entries = buildTimeSeriesEntries(totalEloData, id);
+            setRankingEntries(_.map(entries, (entry) => entry.rankingEntry));
+            setRatingEntries(_.map(entries, (entry) => entry.ratingEntry));
+            setLoading(false);
+            setHistoricElo(totalEloData);
+          }
+        );
       } else {
         const entries = buildTimeSeriesEntries(currentEloData, id);
         setRankingEntries(_.map(entries, (entry) => entry.rankingEntry));
@@ -91,23 +85,23 @@ export default function GuildScreen() {
   function loadMore() {
     if (!id) return;
     const currentEloData = _.clone(historicElo);
-    const daysLoaded = rankingEntries.length;
-    let daysToLoad = WAR_DAYS_TO_LOAD;
-    if (daysToLoad > totalDaysAvailable) {
-      daysToLoad = totalDaysAvailable;
+    const weeksLoaded = rankingEntries.length;
+    let weeksToLoad = WAR_WEEKS_TO_LOAD;
+    if (weeksToLoad > totalWeeksAvailable) {
+      weeksToLoad = totalWeeksAvailable;
     }
-    loadData(daysToLoad, daysLoaded).subscribe((results) => {
-      const eloRatingsByDay: Array<Guilds> = [];
+    loadData(weeksToLoad, weeksLoaded).subscribe((results) => {
+      const eloRatingsByWeek: Array<Guilds> = [];
       _.each(results, (result, index) => {
         const data = result.data;
         const decodedGuilds = Guilds.decode(data);
         if (Either.isRight(decodedGuilds)) {
-          eloRatingsByDay.push(orderedGuilds(decodedGuilds.right));
+          eloRatingsByWeek.push(orderedGuilds(decodedGuilds.right));
         } else {
           console.log(`decode error on url index: ${index}`);
         }
       });
-      const totalEloData = _.concat(currentEloData, eloRatingsByDay);
+      const totalEloData = _.concat(currentEloData, eloRatingsByWeek);
       const entries = buildTimeSeriesEntries(totalEloData, id);
       setRankingEntries(_.map(entries, (entry) => entry.rankingEntry));
       setRatingEntries(_.map(entries, (entry) => entry.ratingEntry));
@@ -120,12 +114,12 @@ export default function GuildScreen() {
     const rankingData = rankingEntries[desiredIndex];
     const ratingData = ratingEntries[desiredIndex];
     if (rankingData && ratingData) {
-      const day = ratingData.day;
+      const week = ratingData.week;
       const rating = _.round(ratingData.value, 3);
       setEloHoverData(
         <div className="hover-data">
-          <div className="days-ago">
-            {day} war{day === 1 ? "" : "s"} ago
+          <div className="weeks-ago">
+            {week} war{week === 1 ? "" : "s"} ago
           </div>
           <div className="rank">#{rankingData.value}</div>
           <div className="rating">{rating}</div>
@@ -149,8 +143,8 @@ export default function GuildScreen() {
       {!loading && (
         <>
           <div className="data-count">
-            ({rankingEntries.length} of {totalDaysAvailable} wars loaded)
-            {rankingEntries.length < totalDaysAvailable && (
+            ({rankingEntries.length} of {totalWeeksAvailable} war weeks loaded)
+            {rankingEntries.length < totalWeeksAvailable && (
               <button
                 className="load-more-button"
                 type="button"

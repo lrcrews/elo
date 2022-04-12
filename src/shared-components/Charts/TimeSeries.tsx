@@ -92,7 +92,7 @@ export default function TimeSeries({
     // x-scale
     xScale = d3
       .scaleLinear()
-      .domain([orderedEntries[0].day, _.last(orderedEntries)?.day || 100]);
+      .domain([orderedEntries[0].week, _.last(orderedEntries)?.week || 100]);
     // y-scale
     let yMax = d3.max(orderedEntries, (entry) => entry.value) || 1000;
     yMax = yMax + yMax * yScaleBuffer;
@@ -118,7 +118,7 @@ export default function TimeSeries({
   const initLineGenerator = (): void => {
     lineGenerator = d3
       .line<TimeSeriesEntry>()
-      .x((entry) => xScale(entry.day))
+      .x((entry) => xScale(entry.week))
       .y((entry) => yScale(entry.value));
   };
 
@@ -282,7 +282,7 @@ export default function TimeSeries({
   };
 
   const calculateDesiredX = (mouse: [number, number]): number => {
-    const xPositions = _.map(orderedEntries, (entry) => xScale(entry.day));
+    const xPositions = _.map(orderedEntries, (entry) => xScale(entry.week));
     const mouseX = mouse[0] - margin.left;
     const bisector = d3.bisector((value) => value).right;
     const mouseIndex = bisector(xPositions, mouseX);
@@ -294,7 +294,7 @@ export default function TimeSeries({
   const fireOnValueUpdate = (xPosition: number): void => {
     const desiredEntryIndex = _.findIndex(
       orderedEntries,
-      (entry) => xScale(entry.day) === xPosition
+      (entry) => xScale(entry.week) === xPosition
     );
     onHoverDataUpdated(desiredEntryIndex);
   };

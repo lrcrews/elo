@@ -119,7 +119,7 @@ export default function GuildScreen() {
       setEloHoverData(
         <div className="hover-data">
           <div className="weeks-ago">
-            {week} war{week === 1 ? "" : "s"} ago
+            {week} week{week === 1 ? "" : "s"} ago
           </div>
           <div className="rank">#{rankingData.value}</div>
           <div className="rating">{rating}</div>

@@ -43,6 +43,7 @@
 const PREFIX = `${process.env.PUBLIC_URL}/data/ELO-WEEK-END-`;
 
 export const ELO_FILE_PATHS = [
+  `${PREFIX}2023-02-17.csv`,
   `${PREFIX}2023-02-10.csv`,
   `${PREFIX}2023-02-03.csv`,
   `${PREFIX}2023-01-27.csv`,
